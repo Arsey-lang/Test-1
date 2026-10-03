@@ -1,167 +1,268 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Простой Сайт</title>
+
+    <title>Поезд</title>
 
     <style>
         * {
             box-sizing: border-box;
         }
 
+        html,
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-
-        header {
-            background-color: #4A90E2;
-            color: white;
-            text-align: center;
-            padding: 2rem 1rem;
-        }
-
-        main {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .card {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1.5rem;
-        }
-
-        h1, h2 {
-            margin-top: 0;
-        }
-
-        /* -----------------------------
-           АНИМАЦИЯ ЖЕЛЕЗНОЙ ДОРОГИ
-        ------------------------------ */
-
-        .railway {
-            position: relative;
-            height: 230px;
-            margin: 3rem 0;
-            overflow: hidden;
-            background: #dfe3e8;
-            border-radius: 12px;
-        }
-
-        /* Две основные рельсы */
-        .rail {
-            position: absolute;
             width: 100%;
-            height: 6px;
-            background: #555;
-            left: 0;
+            min-height: 100%;
         }
 
-        .rail.one {
-            top: 95px;
+        body {
+            background: #dfe5eb;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
         }
 
-        .rail.two {
-            top: 145px;
+        /* Основная область */
+
+        .scene {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 500px;
+            overflow: hidden;
+            background:
+                linear-gradient(
+                    to bottom,
+                    #87ceeb 0%,
+                    #cceeff 55%,
+                    #b7c0c8 55%,
+                    #b7c0c8 100%
+                );
         }
 
-        /* Шпалы */
-        .sleepers {
+        /* Облака */
+
+        .cloud {
             position: absolute;
-            width: 120%;
-            left: -10%;
-            top: 91px;
-            height: 60px;
-
-            background: repeating-linear-gradient(
-                90deg,
-                #765438 0,
-                #765438 8px,
-                transparent 8px,
-                transparent 45px
-            );
-
+            width: 130px;
+            height: 45px;
+            background: white;
+            border-radius: 50px;
             opacity: 0.8;
         }
 
-        /*
-           Вторая ветка.
-           Она начинается с обычного пути,
-           а затем постепенно уходит вверх.
-        */
-        .switch-rail {
+        .cloud::before,
+        .cloud::after {
+            content: "";
             position: absolute;
-            width: 75%;
-            height: 6px;
-            background: #555;
-            left: 25%;
-            top: 145px;
-            transform-origin: left center;
-            transform: rotate(-12deg);
+            background: white;
+            border-radius: 50%;
         }
 
+        .cloud::before {
+            width: 55px;
+            height: 55px;
+            left: 20px;
+            bottom: 10px;
+        }
+
+        .cloud::after {
+            width: 70px;
+            height: 70px;
+            right: 15px;
+            bottom: 5px;
+        }
+
+        .cloud.one {
+            top: 80px;
+            left: 10%;
+        }
+
+        .cloud.two {
+            top: 140px;
+            left: 65%;
+            transform: scale(0.7);
+        }
+
+        /* Железная дорога */
+
+        .railway {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 90px;
+            height: 220px;
+        }
+
+        /* Шпалы */
+
+        .sleepers {
+            position: absolute;
+            left: -50px;
+            right: -50px;
+            top: 105px;
+            height: 75px;
+
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #654321 0px,
+                    #654321 12px,
+                    transparent 12px,
+                    transparent 55px
+                );
+
+            transform: perspective(400px) rotateX(25deg);
+        }
+
+        /* Основные рельсы */
+
+        .rail {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 7px;
+            background: #4b4b4b;
+            border-radius: 5px;
+            z-index: 2;
+        }
+
+        .rail.top {
+            top: 100px;
+        }
+
+        .rail.bottom {
+            top: 155px;
+        }
+
+        /* Рельс, на который переходит поезд */
+
+        .switch-rail {
+            position: absolute;
+            left: 40%;
+            top: 155px;
+            width: 65%;
+            height: 7px;
+
+            background: #4b4b4b;
+            border-radius: 5px;
+
+            transform-origin: left center;
+            transform: rotate(-11deg);
+
+            z-index: 2;
+        }
+
+        /* Вторая направляющая */
+
         .switch-rail.second {
-            top: 95px;
-            transform: rotate(12deg);
+            top: 100px;
+            transform: rotate(11deg);
         }
 
         /* Поезд */
+
         .train {
             position: absolute;
-            left: -180px;
-            top: 60px;
-            width: 150px;
-            height: 70px;
-            background: #e74c3c;
-            border-radius: 12px 18px 5px 5px;
 
-            animation: trainMove 8s linear infinite;
-            z-index: 5;
+            left: -220px;
+            top: 55px;
+
+            width: 180px;
+            height: 85px;
+
+            background: #e53935;
+
+            border-radius: 12px 20px 8px 8px;
+
+            z-index: 10;
+
+            animation: none;
+        }
+
+        /* Передняя часть */
+
+        .train::before {
+            content: "";
+
+            position: absolute;
+
+            right: -25px;
+            top: 25px;
+
+            width: 30px;
+            height: 45px;
+
+            background: #c62828;
+
+            border-radius: 0 12px 8px 0;
         }
 
         /* Окна */
+
         .window {
             position: absolute;
-            width: 30px;
-            height: 25px;
-            background: #9ddcff;
-            border: 3px solid #333;
-            top: 12px;
+
+            top: 13px;
+
+            width: 36px;
+            height: 28px;
+
+            background: #bdefff;
+
+            border: 4px solid #333;
+
+            border-radius: 5px;
         }
 
         .window.one {
-            left: 20px;
+            left: 18px;
         }
 
         .window.two {
-            left: 60px;
+            left: 68px;
         }
 
         .window.three {
-            left: 100px;
+            left: 118px;
         }
 
         /* Колёса */
+
         .wheel {
             position: absolute;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #222;
-            bottom: -14px;
-            border: 5px solid #555;
 
-            animation: wheels 0.25s linear infinite;
+            bottom: -17px;
+
+            width: 34px;
+            height: 34px;
+
+            background: #222;
+
+            border: 6px solid #555;
+
+            border-radius: 50%;
+
+            animation: wheelRotate 0.25s linear infinite paused;
+        }
+
+        .wheel::after {
+            content: "";
+
+            position: absolute;
+
+            width: 8px;
+            height: 8px;
+
+            left: 7px;
+            top: 7px;
+
+            background: #aaa;
+
+            border-radius: 50%;
         }
 
         .wheel.left {
@@ -172,58 +273,79 @@
             right: 25px;
         }
 
-        /* Эффект перехода на новую ветку */
-        .train::after {
-            content: "";
+        /* Фара */
+
+        .lamp {
             position: absolute;
-            width: 190px;
-            height: 4px;
-            background: rgba(255,255,255,0.5);
-            top: 35px;
-            left: -20px;
-            opacity: 0;
+
+            right: -20px;
+            top: 45px;
+
+            width: 12px;
+            height: 12px;
+
+            background: #fff59d;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 15px #fff,
+                0 0 30px #fff59d;
         }
 
-        /* Движение поезда */
-        @keyframes trainMove {
+        /* Кнопка */
 
-            0% {
-                left: -180px;
-                top: 60px;
-                transform: rotate(0deg);
-            }
+        .start-button {
+            position: absolute;
 
-            35% {
-                left: 35%;
-                top: 60px;
-                transform: rotate(0deg);
-            }
+            left: 50%;
+            bottom: 25px;
 
-            /*
-             * Здесь поезд начинает переходить
-             * на новую ветку.
-             */
-            50% {
-                left: 50%;
-                top: 35px;
-                transform: rotate(-8deg);
-            }
+            transform: translateX(-50%);
 
-            65% {
-                left: 65%;
-                top: 15px;
-                transform: rotate(-12deg);
-            }
+            padding: 14px 30px;
 
-            100% {
-                left: 110%;
-                top: -5px;
-                transform: rotate(-12deg);
-            }
+            border: none;
+            border-radius: 10px;
+
+            background: #1976d2;
+            color: white;
+
+            font-size: 18px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 4px 10px rgba(0, 0, 0, 0.25);
+
+            transition:
+                transform 0.15s,
+                background 0.15s;
         }
 
-        /* Вращение колёс */
-        @keyframes wheels {
+        .start-button:hover {
+            background: #1565c0;
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        .start-button:active {
+            transform: translateX(-50%) scale(0.97);
+        }
+
+        /* Анимация поезда */
+
+        .train.run {
+            animation: trainMove 8s linear forwards;
+        }
+
+        /* Анимация колёс */
+
+        .train.run .wheel {
+            animation-play-state: running;
+        }
+
+        @keyframes wheelRotate {
             from {
                 transform: rotate(0deg);
             }
@@ -233,37 +355,68 @@
             }
         }
 
-        /* Подпись */
-        .railway-title {
-            position: absolute;
-            left: 20px;
-            top: 15px;
-            font-weight: bold;
-            color: #555;
-            z-index: 10;
+        /* Поезд едет прямо,
+           затем переходит на новую ветку */
+
+        @keyframes trainMove {
+
+            0% {
+                left: -220px;
+                top: 55px;
+                transform: rotate(0deg);
+            }
+
+            30% {
+                left: 25%;
+                top: 55px;
+                transform: rotate(0deg);
+            }
+
+            45% {
+                left: 42%;
+                top: 48px;
+                transform: rotate(-5deg);
+            }
+
+            60% {
+                left: 57%;
+                top: 25px;
+                transform: rotate(-11deg);
+            }
+
+            75% {
+                left: 72%;
+                top: 0px;
+                transform: rotate(-11deg);
+            }
+
+            100% {
+                left: calc(100% + 220px);
+                top: -20px;
+                transform: rotate(-11deg);
+            }
         }
 
-        footer {
-            text-align: center;
-            padding: 1.5rem;
-            background-color: #333;
-            color: white;
-            margin-top: 4rem;
-        }
+        /* Телефон */
 
-        /* Адаптация для телефона */
         @media (max-width: 600px) {
 
-            .railway {
-                height: 200px;
+            .scene {
+                min-height: 450px;
             }
 
             .train {
-                transform: scale(0.8);
+                transform: scale(0.75);
+                transform-origin: left center;
             }
 
-            .switch-rail {
-                width: 90%;
+            .railway {
+                bottom: 90px;
+            }
+
+            .start-button {
+                font-size: 16px;
+                padding: 12px 24px;
             }
         }
     </style>
@@ -271,45 +424,36 @@
 
 <body>
 
-    <header>
-        <h1>Добро пожаловать на мой сайт!</h1>
-        <p>Простая страница на чистом HTML и CSS</p>
-    </header>
+    <div class="scene">
 
-    <main>
+        <!-- Облака -->
 
-        <div class="card">
-            <h2>Обо мне</h2>
-            <p>
-                Привет! Это мой первый сайт, созданный вручную
-                без использования сложных фреймворков.
-            </p>
-        </div>
+        <div class="cloud one"></div>
+        <div class="cloud two"></div>
 
-        <!-- АНИМАЦИЯ ЖЕЛЕЗНОЙ ДОРОГИ -->
+        <!-- Железная дорога -->
 
         <div class="railway">
 
-            <div class="railway-title">
-                🚆 Переключение рельсов
-            </div>
-
             <div class="sleepers"></div>
 
-            <!-- Основные рельсы -->
-            <div class="rail one"></div>
-            <div class="rail two"></div>
+            <div class="rail top"></div>
+            <div class="rail bottom"></div>
 
-            <!-- Ветка -->
+            <!-- Переключение на новую ветку -->
+
             <div class="switch-rail"></div>
             <div class="switch-rail second"></div>
 
             <!-- Поезд -->
-            <div class="train">
+
+            <div class="train" id="train">
 
                 <div class="window one"></div>
                 <div class="window two"></div>
                 <div class="window three"></div>
+
+                <div class="lamp"></div>
 
                 <div class="wheel left"></div>
                 <div class="wheel right"></div>
@@ -318,20 +462,44 @@
 
         </div>
 
-        <div class="card">
-            <h2>Мои проекты или увлечения</h2>
-            <p>
-                Здесь вы можете разместить любой текст,
-                ссылки на социальные сети или описания ваших идей.
-            </p>
-        </div>
+        <!-- Кнопка запуска -->
 
-    </main>
+        <button
+            class="start-button"
+            id="startButton"
+            onclick="startTrain()">
+            🚆 Запустить поезд
+        </button>
 
-    <footer>
-        <p>&copy; 2026 Мой Сайт. Сделано с нуля.</p>
-    </footer>
+    </div>
+
+    <script>
+
+        function startTrain() {
+
+            const train = document.getElementById("train");
+            const button = document.getElementById("startButton");
+
+            /*
+             * Сбрасываем анимацию,
+             * чтобы поезд можно было запускать
+             * сколько угодно раз.
+             */
+
+            train.classList.remove("run");
+
+            void train.offsetWidth;
+
+            train.classList.add("run");
+
+            button.textContent = "🚆 Поезд едет...";
+
+            setTimeout(function () {
+                button.textContent = "🚆 Запустить поезд";
+            }, 8000);
+        }
+
+    </script>
 
 </body>
-</html>
-        
+</html>    
