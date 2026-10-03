@@ -4,348 +4,159 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Поезд</title>
+    <title>Мой сайт</title>
 
     <style>
         * {
             box-sizing: border-box;
         }
 
-        html,
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 0;
-            width: 100%;
-            min-height: 100%;
+            background: #f4f4f9;
+            color: #333;
         }
 
-        body {
-            background: #dfe5eb;
-            font-family: Arial, sans-serif;
-            overflow-x: hidden;
+        header {
+            background: #4A90E2;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
         }
 
-        /* Основная область */
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
 
-        .scene {
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        h1, h2 {
+            margin-top: 0;
+        }
+
+        /* ==================================
+           МЕХАНИЗМ ПАРОВОЗНОГО ДВИГАТЕЛЯ
+        ================================== */
+
+        .engine {
             position: relative;
-            width: 100%;
-            height: 100vh;
-            min-height: 500px;
+            height: 300px;
+            margin: 30px 0;
+            background:
+                linear-gradient(#e8e8e8, #cfcfcf);
+            border-radius: 12px;
             overflow: hidden;
-            background:
-                linear-gradient(
-                    to bottom,
-                    #87ceeb 0%,
-                    #cceeff 55%,
-                    #b7c0c8 55%,
-                    #b7c0c8 100%
-                );
+            border: 2px solid #aaa;
         }
 
-        /* Облака */
-
-        .cloud {
+        .engine-title {
             position: absolute;
-            width: 130px;
-            height: 45px;
-            background: white;
-            border-radius: 50px;
-            opacity: 0.8;
-        }
-
-        .cloud::before,
-        .cloud::after {
-            content: "";
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-        }
-
-        .cloud::before {
-            width: 55px;
-            height: 55px;
+            top: 15px;
             left: 20px;
-            bottom: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            z-index: 10;
         }
 
-        .cloud::after {
-            width: 70px;
-            height: 70px;
-            right: 15px;
-            bottom: 5px;
-        }
-
-        .cloud.one {
-            top: 80px;
-            left: 10%;
-        }
-
-        .cloud.two {
-            top: 140px;
-            left: 65%;
-            transform: scale(0.7);
-        }
-
-        /* Железная дорога */
-
-        .railway {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 90px;
-            height: 220px;
-        }
-
-        /* Шпалы */
-
-        .sleepers {
-            position: absolute;
-            left: -50px;
-            right: -50px;
-            top: 105px;
-            height: 75px;
-
-            background:
-                repeating-linear-gradient(
-                    90deg,
-                    #654321 0px,
-                    #654321 12px,
-                    transparent 12px,
-                    transparent 55px
-                );
-
-            transform: perspective(400px) rotateX(25deg);
-        }
-
-        /* Основные рельсы */
+        /* РЕЛЬС */
 
         .rail {
             position: absolute;
+            bottom: 35px;
             left: 0;
             width: 100%;
-            height: 7px;
-            background: #4b4b4b;
-            border-radius: 5px;
-            z-index: 2;
+            height: 8px;
+            background: #555;
         }
 
-        .rail.top {
-            top: 100px;
-        }
-
-        .rail.bottom {
-            top: 155px;
-        }
-
-        /* Рельс, на который переходит поезд */
-
-        .switch-rail {
-            position: absolute;
-            left: 40%;
-            top: 155px;
-            width: 65%;
-            height: 7px;
-
-            background: #4b4b4b;
-            border-radius: 5px;
-
-            transform-origin: left center;
-            transform: rotate(-11deg);
-
-            z-index: 2;
-        }
-
-        /* Вторая направляющая */
-
-        .switch-rail.second {
-            top: 100px;
-            transform: rotate(11deg);
-        }
-
-        /* Поезд */
-
-        .train {
-            position: absolute;
-
-            left: -220px;
-            top: 55px;
-
-            width: 180px;
-            height: 85px;
-
-            background: #e53935;
-
-            border-radius: 12px 20px 8px 8px;
-
-            z-index: 10;
-
-            animation: none;
-        }
-
-        /* Передняя часть */
-
-        .train::before {
+        .rail::after {
             content: "";
-
             position: absolute;
+            left: 0;
+            top: 8px;
+            width: 100%;
+            height: 20px;
 
-            right: -25px;
-            top: 25px;
-
-            width: 30px;
-            height: 45px;
-
-            background: #c62828;
-
-            border-radius: 0 12px 8px 0;
+            background: repeating-linear-gradient(
+                90deg,
+                #765438 0px,
+                #765438 12px,
+                transparent 12px,
+                transparent 55px
+            );
         }
 
-        /* Окна */
-
-        .window {
-            position: absolute;
-
-            top: 13px;
-
-            width: 36px;
-            height: 28px;
-
-            background: #bdefff;
-
-            border: 4px solid #333;
-
-            border-radius: 5px;
-        }
-
-        .window.one {
-            left: 18px;
-        }
-
-        .window.two {
-            left: 68px;
-        }
-
-        .window.three {
-            left: 118px;
-        }
-
-        /* Колёса */
+        /* ==================================
+           БОЛЬШОЕ КОЛЕСО
+        ================================== */
 
         .wheel {
             position: absolute;
 
-            bottom: -17px;
+            width: 150px;
+            height: 150px;
 
-            width: 34px;
-            height: 34px;
-
-            background: #222;
-
-            border: 6px solid #555;
+            left: 60%;
+            bottom: 45px;
 
             border-radius: 50%;
 
-            animation: wheelRotate 0.25s linear infinite paused;
+            background:
+                radial-gradient(
+                    circle,
+                    #444 0 8px,
+                    #777 9px 15px,
+                    #333 16px 20px,
+                    transparent 21px
+                );
+
+            border: 12px solid #333;
+
+            animation: rotateWheel 1.4s linear infinite;
         }
 
-        .wheel::after {
-            content: "";
+        /* Спицы */
 
+        .spoke {
             position: absolute;
 
             width: 8px;
-            height: 8px;
+            height: 125px;
 
-            left: 7px;
-            top: 7px;
+            background: #444;
 
-            background: #aaa;
+            left: 59px;
+            top: 0;
 
-            border-radius: 50%;
+            transform-origin: center;
         }
 
-        .wheel.left {
-            left: 25px;
+        .spoke:nth-child(1) {
+            transform: rotate(0deg);
         }
 
-        .wheel.right {
-            right: 25px;
+        .spoke:nth-child(2) {
+            transform: rotate(45deg);
         }
 
-        /* Фара */
-
-        .lamp {
-            position: absolute;
-
-            right: -20px;
-            top: 45px;
-
-            width: 12px;
-            height: 12px;
-
-            background: #fff59d;
-
-            border-radius: 50%;
-
-            box-shadow:
-                0 0 15px #fff,
-                0 0 30px #fff59d;
+        .spoke:nth-child(3) {
+            transform: rotate(90deg);
         }
 
-        /* Кнопка */
-
-        .start-button {
-            position: absolute;
-
-            left: 50%;
-            bottom: 25px;
-
-            transform: translateX(-50%);
-
-            padding: 14px 30px;
-
-            border: none;
-            border-radius: 10px;
-
-            background: #1976d2;
-            color: white;
-
-            font-size: 18px;
-            font-weight: bold;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 4px 10px rgba(0, 0, 0, 0.25);
-
-            transition:
-                transform 0.15s,
-                background 0.15s;
+        .spoke:nth-child(4) {
+            transform: rotate(135deg);
         }
 
-        .start-button:hover {
-            background: #1565c0;
-            transform: translateX(-50%) scale(1.05);
-        }
-
-        .start-button:active {
-            transform: translateX(-50%) scale(0.97);
-        }
-
-        /* Анимация поезда */
-
-        .train.run {
-            animation: trainMove 8s linear forwards;
-        }
-
-        /* Анимация колёс */
-
-        .train.run .wheel {
-            animation-play-state: running;
-        }
-
-        @keyframes wheelRotate {
+        @keyframes rotateWheel {
             from {
                 transform: rotate(0deg);
             }
@@ -355,68 +166,253 @@
             }
         }
 
-        /* Поезд едет прямо,
-           затем переходит на новую ветку */
+        /* ==================================
+           ЦИЛИНДР
+        ================================== */
 
-        @keyframes trainMove {
+        .cylinder {
+            position: absolute;
+
+            width: 170px;
+            height: 70px;
+
+            left: 18%;
+            bottom: 145px;
+
+            background: linear-gradient(
+                #777,
+                #333
+            );
+
+            border-radius: 12px;
+
+            border: 5px solid #222;
+
+            box-shadow:
+                inset 0 5px 10px rgba(255,255,255,0.25);
+        }
+
+        .cylinder::before {
+            content: "";
+
+            position: absolute;
+
+            width: 25px;
+            height: 80px;
+
+            left: -25px;
+            top: -10px;
+
+            background: #444;
+
+            border-radius: 8px;
+        }
+
+        /* ==================================
+           ПОРШЕНЬ
+        ================================== */
+
+        .piston {
+            position: absolute;
+
+            width: 65px;
+            height: 52px;
+
+            left: 28%;
+            bottom: 154px;
+
+            background: linear-gradient(
+                #aaa,
+                #555
+            );
+
+            border: 5px solid #222;
+
+            border-radius: 8px;
+
+            animation: pistonMove 1.4s ease-in-out infinite;
+        }
+
+        @keyframes pistonMove {
 
             0% {
-                left: -220px;
-                top: 55px;
-                transform: rotate(0deg);
+                transform: translateX(-45px);
             }
 
-            30% {
-                left: 25%;
-                top: 55px;
-                transform: rotate(0deg);
-            }
-
-            45% {
-                left: 42%;
-                top: 48px;
-                transform: rotate(-5deg);
-            }
-
-            60% {
-                left: 57%;
-                top: 25px;
-                transform: rotate(-11deg);
-            }
-
-            75% {
-                left: 72%;
-                top: 0px;
-                transform: rotate(-11deg);
+            50% {
+                transform: translateX(55px);
             }
 
             100% {
-                left: calc(100% + 220px);
-                top: -20px;
-                transform: rotate(-11deg);
+                transform: translateX(-45px);
             }
+        }
+
+        /* ==================================
+           ШАТУН
+        ================================== */
+
+        .rod {
+            position: absolute;
+
+            width: 180px;
+            height: 14px;
+
+            left: 38%;
+            bottom: 160px;
+
+            background: #222;
+
+            border-radius: 10px;
+
+            transform-origin: left center;
+
+            animation: rodMove 1.4s ease-in-out infinite;
+        }
+
+        @keyframes rodMove {
+
+            0% {
+                transform: rotate(8deg);
+            }
+
+            25% {
+                transform: rotate(-8deg);
+            }
+
+            50% {
+                transform: rotate(8deg);
+            }
+
+            75% {
+                transform: rotate(-8deg);
+            }
+
+            100% {
+                transform: rotate(8deg);
+            }
+        }
+
+        /* ==================================
+           МЕХАНИЗМ КРИВОШИПА
+        ================================== */
+
+        .crank {
+            position: absolute;
+
+            width: 25px;
+            height: 25px;
+
+            background: #111;
+
+            border-radius: 50%;
+
+            left: calc(60% + 65px);
+            bottom: 108px;
+
+            z-index: 5;
+        }
+
+        /* ==================================
+           ПАР
+        ================================== */
+
+        .steam {
+            position: absolute;
+
+            width: 35px;
+            height: 35px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.75);
+
+            left: 15%;
+            bottom: 190px;
+
+            animation: steam 2s ease-out infinite;
+        }
+
+        .steam:nth-child(2) {
+            animation-delay: .6s;
+        }
+
+        .steam:nth-child(3) {
+            animation-delay: 1.2s;
+        }
+
+        @keyframes steam {
+
+            0% {
+                transform: scale(0.3) translate(0, 0);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(2) translate(-20px, -80px);
+                opacity: 0;
+            }
+        }
+
+        /* ==================================
+           ТЕКСТ ПОД АНИМАЦИЕЙ
+        ================================== */
+
+        .description {
+            margin-top: 20px;
+            padding: 15px;
+
+            background: #f1f1f1;
+
+            border-left: 5px solid #4A90E2;
+
+            border-radius: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #333;
+            color: white;
+            margin-top: 4rem;
         }
 
         /* Телефон */
 
         @media (max-width: 600px) {
 
-            .scene {
-                min-height: 450px;
+            .engine {
+                height: 260px;
             }
 
-            .train {
-                transform: scale(0.75);
-                transform-origin: left center;
+            .wheel {
+                width: 110px;
+                height: 110px;
+
+                left: 58%;
             }
 
-            .railway {
-                bottom: 90px;
+            .spoke {
+                height: 90px;
+                left: 42px;
             }
 
-            .start-button {
-                font-size: 16px;
-                padding: 12px 24px;
+            .cylinder {
+                left: 8%;
+                width: 130px;
+            }
+
+            .piston {
+                left: 20%;
+            }
+
+            .rod {
+                left: 30%;
+                width: 140px;
             }
         }
     </style>
@@ -424,82 +420,121 @@
 
 <body>
 
-    <div class="scene">
+<header>
+    <h1>Добро пожаловать на мой сайт!</h1>
+    <p>Простая страница на чистом HTML и CSS</p>
+</header>
 
-        <!-- Облака -->
+<main>
 
-        <div class="cloud one"></div>
-        <div class="cloud two"></div>
+    <div class="card">
 
-        <!-- Железная дорога -->
+        <h2>Обо мне</h2>
 
-        <div class="railway">
-
-            <div class="sleepers"></div>
-
-            <div class="rail top"></div>
-            <div class="rail bottom"></div>
-
-            <!-- Переключение на новую ветку -->
-
-            <div class="switch-rail"></div>
-            <div class="switch-rail second"></div>
-
-            <!-- Поезд -->
-
-            <div class="train" id="train">
-
-                <div class="window one"></div>
-                <div class="window two"></div>
-                <div class="window three"></div>
-
-                <div class="lamp"></div>
-
-                <div class="wheel left"></div>
-                <div class="wheel right"></div>
-
-            </div>
-
-        </div>
-
-        <!-- Кнопка запуска -->
-
-        <button
-            class="start-button"
-            id="startButton"
-            onclick="startTrain()">
-            🚆 Запустить поезд
-        </button>
+        <p>
+            Привет! Это мой первый сайт, созданный вручную
+            без сложных фреймворков.
+        </p>
 
     </div>
 
-    <script>
 
-        function startTrain() {
+    <!-- ===============================
+         АНИМАЦИЯ ДВИГАТЕЛЯ
+    ================================ -->
 
-            const train = document.getElementById("train");
-            const button = document.getElementById("startButton");
+    <div class="card">
 
-            /*
-             * Сбрасываем анимацию,
-             * чтобы поезд можно было запускать
-             * сколько угодно раз.
-             */
+        <h2>Работа паровозного двигателя</h2>
 
-            train.classList.remove("run");
+        <div class="engine">
 
-            void train.offsetWidth;
+            <div class="engine-title">
+                ⚙️ Паровая машина
+            </div>
 
-            train.classList.add("run");
 
-            button.textContent = "🚆 Поезд едет...";
+            <!-- Цилиндр -->
 
-            setTimeout(function () {
-                button.textContent = "🚆 Запустить поезд";
-            }, 8000);
-        }
+            <div class="cylinder"></div>
 
-    </script>
+
+            <!-- Поршень -->
+
+            <div class="piston"></div>
+
+
+            <!-- Шатун -->
+
+            <div class="rod"></div>
+
+
+            <!-- Кривошип -->
+
+            <div class="crank"></div>
+
+
+            <!-- Колесо -->
+
+            <div class="wheel">
+
+                <div class="spoke"></div>
+                <div class="spoke"></div>
+                <div class="spoke"></div>
+                <div class="spoke"></div>
+
+            </div>
+
+
+            <!-- Пар -->
+
+            <div class="steam"></div>
+            <div class="steam"></div>
+            <div class="steam"></div>
+
+
+            <!-- Рельс -->
+
+            <div class="rail"></div>
+
+        </div>
+
+
+        <div class="description">
+
+            <strong>Как это работает:</strong>
+
+            <p>
+                Пар поступает в цилиндр и двигает поршень
+                вперёд и назад. Поршень через шатун передаёт
+                движение на кривошип, который вращает колесо.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Мои проекты или увлечения</h2>
+
+        <p>
+            Здесь вы можете разместить любой текст,
+            ссылки на социальные сети или описания ваших идей.
+        </p>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <p>&copy; 2026 Мой Сайт. Сделано с нуля.</p>
+
+</footer>
 
 </body>
-</html>    
+</html>
+            
