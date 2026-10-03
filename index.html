@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             background: #f4f4f9;
             color: #333;
@@ -22,397 +22,60 @@
             background: #4A90E2;
             color: white;
             text-align: center;
-            padding: 2rem 1rem;
+            padding: 40px 20px;
         }
 
         main {
             max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            margin: 30px auto;
+            padding: 0 20px;
         }
 
         .card {
             background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            margin-bottom: 1.5rem;
-        }
-
-        h1, h2 {
-            margin-top: 0;
-        }
-
-        /* ==================================
-           МЕХАНИЗМ ПАРОВОЗНОГО ДВИГАТЕЛЯ
-        ================================== */
-
-        .engine {
-            position: relative;
-            height: 300px;
-            margin: 30px 0;
-            background:
-                linear-gradient(#e8e8e8, #cfcfcf);
+            padding: 25px;
+            margin-bottom: 25px;
             border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid #aaa;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
-        .engine-title {
-            position: absolute;
-            top: 15px;
-            left: 20px;
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .stat {
+            background: #f7f9fc;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 40px;
             font-weight: bold;
-            font-size: 18px;
-            z-index: 10;
+            color: #4A90E2;
+            margin-top: 10px;
         }
 
-        /* РЕЛЬС */
-
-        .rail {
-            position: absolute;
-            bottom: 35px;
-            left: 0;
+        canvas {
             width: 100%;
-            height: 8px;
-            background: #555;
-        }
-
-        .rail::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 8px;
-            width: 100%;
-            height: 20px;
-
-            background: repeating-linear-gradient(
-                90deg,
-                #765438 0px,
-                #765438 12px,
-                transparent 12px,
-                transparent 55px
-            );
-        }
-
-        /* ==================================
-           БОЛЬШОЕ КОЛЕСО
-        ================================== */
-
-        .wheel {
-            position: absolute;
-
-            width: 150px;
-            height: 150px;
-
-            left: 60%;
-            bottom: 45px;
-
-            border-radius: 50%;
-
-            background:
-                radial-gradient(
-                    circle,
-                    #444 0 8px,
-                    #777 9px 15px,
-                    #333 16px 20px,
-                    transparent 21px
-                );
-
-            border: 12px solid #333;
-
-            animation: rotateWheel 1.4s linear infinite;
-        }
-
-        /* Спицы */
-
-        .spoke {
-            position: absolute;
-
-            width: 8px;
-            height: 125px;
-
-            background: #444;
-
-            left: 59px;
-            top: 0;
-
-            transform-origin: center;
-        }
-
-        .spoke:nth-child(1) {
-            transform: rotate(0deg);
-        }
-
-        .spoke:nth-child(2) {
-            transform: rotate(45deg);
-        }
-
-        .spoke:nth-child(3) {
-            transform: rotate(90deg);
-        }
-
-        .spoke:nth-child(4) {
-            transform: rotate(135deg);
-        }
-
-        @keyframes rotateWheel {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* ==================================
-           ЦИЛИНДР
-        ================================== */
-
-        .cylinder {
-            position: absolute;
-
-            width: 170px;
-            height: 70px;
-
-            left: 18%;
-            bottom: 145px;
-
-            background: linear-gradient(
-                #777,
-                #333
-            );
-
-            border-radius: 12px;
-
-            border: 5px solid #222;
-
-            box-shadow:
-                inset 0 5px 10px rgba(255,255,255,0.25);
-        }
-
-        .cylinder::before {
-            content: "";
-
-            position: absolute;
-
-            width: 25px;
-            height: 80px;
-
-            left: -25px;
-            top: -10px;
-
-            background: #444;
-
-            border-radius: 8px;
-        }
-
-        /* ==================================
-           ПОРШЕНЬ
-        ================================== */
-
-        .piston {
-            position: absolute;
-
-            width: 65px;
-            height: 52px;
-
-            left: 28%;
-            bottom: 154px;
-
-            background: linear-gradient(
-                #aaa,
-                #555
-            );
-
-            border: 5px solid #222;
-
-            border-radius: 8px;
-
-            animation: pistonMove 1.4s ease-in-out infinite;
-        }
-
-        @keyframes pistonMove {
-
-            0% {
-                transform: translateX(-45px);
-            }
-
-            50% {
-                transform: translateX(55px);
-            }
-
-            100% {
-                transform: translateX(-45px);
-            }
-        }
-
-        /* ==================================
-           ШАТУН
-        ================================== */
-
-        .rod {
-            position: absolute;
-
-            width: 180px;
-            height: 14px;
-
-            left: 38%;
-            bottom: 160px;
-
-            background: #222;
-
-            border-radius: 10px;
-
-            transform-origin: left center;
-
-            animation: rodMove 1.4s ease-in-out infinite;
-        }
-
-        @keyframes rodMove {
-
-            0% {
-                transform: rotate(8deg);
-            }
-
-            25% {
-                transform: rotate(-8deg);
-            }
-
-            50% {
-                transform: rotate(8deg);
-            }
-
-            75% {
-                transform: rotate(-8deg);
-            }
-
-            100% {
-                transform: rotate(8deg);
-            }
-        }
-
-        /* ==================================
-           МЕХАНИЗМ КРИВОШИПА
-        ================================== */
-
-        .crank {
-            position: absolute;
-
-            width: 25px;
-            height: 25px;
-
-            background: #111;
-
-            border-radius: 50%;
-
-            left: calc(60% + 65px);
-            bottom: 108px;
-
-            z-index: 5;
-        }
-
-        /* ==================================
-           ПАР
-        ================================== */
-
-        .steam {
-            position: absolute;
-
-            width: 35px;
-            height: 35px;
-
-            border-radius: 50%;
-
-            background: rgba(255,255,255,0.75);
-
-            left: 15%;
-            bottom: 190px;
-
-            animation: steam 2s ease-out infinite;
-        }
-
-        .steam:nth-child(2) {
-            animation-delay: .6s;
-        }
-
-        .steam:nth-child(3) {
-            animation-delay: 1.2s;
-        }
-
-        @keyframes steam {
-
-            0% {
-                transform: scale(0.3) translate(0, 0);
-                opacity: 0;
-            }
-
-            20% {
-                opacity: 0.8;
-            }
-
-            100% {
-                transform: scale(2) translate(-20px, -80px);
-                opacity: 0;
-            }
-        }
-
-        /* ==================================
-           ТЕКСТ ПОД АНИМАЦИЕЙ
-        ================================== */
-
-        .description {
-            margin-top: 20px;
-            padding: 15px;
-
-            background: #f1f1f1;
-
-            border-left: 5px solid #4A90E2;
-
-            border-radius: 5px;
+            max-height: 350px;
         }
 
         footer {
             text-align: center;
-            padding: 1.5rem;
+            padding: 25px;
             background: #333;
             color: white;
-            margin-top: 4rem;
+            margin-top: 50px;
         }
 
-        /* Телефон */
-
         @media (max-width: 600px) {
-
-            .engine {
-                height: 260px;
-            }
-
-            .wheel {
-                width: 110px;
-                height: 110px;
-
-                left: 58%;
-            }
-
-            .spoke {
-                height: 90px;
-                left: 42px;
-            }
-
-            .cylinder {
-                left: 8%;
-                width: 130px;
-            }
-
-            .piston {
-                left: 20%;
-            }
-
-            .rod {
-                left: 30%;
-                width: 140px;
+            .stats {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -422,119 +85,303 @@
 
 <header>
     <h1>Добро пожаловать на мой сайт!</h1>
-    <p>Простая страница на чистом HTML и CSS</p>
+    <p>Моя личная страница</p>
 </header>
 
 <main>
 
     <div class="card">
-
         <h2>Обо мне</h2>
 
         <p>
-            Привет! Это мой первый сайт, созданный вручную
-            без сложных фреймворков.
+            Привет! Это мой сайт, созданный на HTML, CSS и JavaScript.
         </p>
-
     </div>
 
-
-    <!-- ===============================
-         АНИМАЦИЯ ДВИГАТЕЛЯ
-    ================================ -->
-
     <div class="card">
+        <h2>Статистика сайта</h2>
 
-        <h2>Работа паровозного двигателя</h2>
+        <div class="stats">
 
-        <div class="engine">
-
-            <div class="engine-title">
-                ⚙️ Паровая машина
+            <div class="stat">
+                Посещений всего
+                <span id="totalVisits" class="stat-number">0</span>
             </div>
 
-
-            <!-- Цилиндр -->
-
-            <div class="cylinder"></div>
-
-
-            <!-- Поршень -->
-
-            <div class="piston"></div>
-
-
-            <!-- Шатун -->
-
-            <div class="rod"></div>
-
-
-            <!-- Кривошип -->
-
-            <div class="crank"></div>
-
-
-            <!-- Колесо -->
-
-            <div class="wheel">
-
-                <div class="spoke"></div>
-                <div class="spoke"></div>
-                <div class="spoke"></div>
-                <div class="spoke"></div>
-
+            <div class="stat">
+                Сегодня
+                <span id="todayVisits" class="stat-number">0</span>
             </div>
 
-
-            <!-- Пар -->
-
-            <div class="steam"></div>
-            <div class="steam"></div>
-            <div class="steam"></div>
-
-
-            <!-- Рельс -->
-
-            <div class="rail"></div>
-
         </div>
-
-
-        <div class="description">
-
-            <strong>Как это работает:</strong>
-
-            <p>
-                Пар поступает в цилиндр и двигает поршень
-                вперёд и назад. Поршень через шатун передаёт
-                движение на кривошип, который вращает колесо.
-            </p>
-
-        </div>
-
     </div>
 
-
     <div class="card">
+        <h2>Посещения по дням</h2>
 
-        <h2>Мои проекты или увлечения</h2>
-
-        <p>
-            Здесь вы можете разместить любой текст,
-            ссылки на социальные сети или описания ваших идей.
-        </p>
-
+        <canvas id="visitsChart"></canvas>
     </div>
 
 </main>
 
-
 <footer>
-
-    <p>&copy; 2026 Мой Сайт. Сделано с нуля.</p>
-
+    <p>&copy; 2026 Мой сайт</p>
 </footer>
+
+
+<script>
+
+    /*
+     * Получаем сегодняшнюю дату.
+     */
+    const today = new Date().toISOString().split("T")[0];
+
+
+    /*
+     * Получаем сохранённую статистику.
+     */
+    let statistics =
+        JSON.parse(localStorage.getItem("siteStatistics")) || {
+            total: 0,
+            days: {}
+        };
+
+
+    /*
+     * Увеличиваем общее количество посещений.
+     */
+    statistics.total++;
+
+
+    /*
+     * Если сегодня ещё нет записи,
+     * создаём её.
+     */
+    if (!statistics.days[today]) {
+        statistics.days[today] = 0;
+    }
+
+
+    /*
+     * Увеличиваем посещения за сегодня.
+     */
+    statistics.days[today]++;
+
+
+    /*
+     * Сохраняем статистику.
+     */
+    localStorage.setItem(
+        "siteStatistics",
+        JSON.stringify(statistics)
+    );
+
+
+    /*
+     * Показываем количество посещений.
+     */
+    document.getElementById("totalVisits").textContent =
+        statistics.total;
+
+    document.getElementById("todayVisits").textContent =
+        statistics.days[today];
+
+
+    /*
+     * Подготавливаем данные для графика.
+     */
+    const dates = Object.keys(statistics.days).sort();
+
+    const values = dates.map(date =>
+        statistics.days[date]
+    );
+
+
+    /*
+     * Рисуем график.
+     */
+    const canvas = document.getElementById("visitsChart");
+
+    const ctx = canvas.getContext("2d");
+
+
+    function drawChart() {
+
+        const width = canvas.parentElement.clientWidth;
+
+        canvas.width = width;
+        canvas.height = 320;
+
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        const padding = 45;
+
+        const chartWidth =
+            canvas.width - padding * 2;
+
+        const chartHeight =
+            canvas.height - padding * 2;
+
+
+        /*
+         * Максимальное значение.
+         */
+        const maxValue =
+            Math.max(...values, 1);
+
+
+        /*
+         * Оси.
+         */
+        ctx.beginPath();
+
+        ctx.moveTo(
+            padding,
+            padding
+        );
+
+        ctx.lineTo(
+            padding,
+            canvas.height - padding
+        );
+
+        ctx.lineTo(
+            canvas.width - padding,
+            canvas.height - padding
+        );
+
+        ctx.strokeStyle = "#999";
+        ctx.stroke();
+
+
+        /*
+         * Если есть только один день,
+         * показываем одну точку.
+         */
+        values.forEach((value, index) => {
+
+            const x =
+                padding +
+                (index / Math.max(values.length - 1, 1))
+                * chartWidth;
+
+            const y =
+                canvas.height -
+                padding -
+                (value / maxValue)
+                * chartHeight;
+
+
+            /*
+             * Точка.
+             */
+            ctx.beginPath();
+
+            ctx.arc(
+                x,
+                y,
+                5,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle = "#4A90E2";
+            ctx.fill();
+
+
+            /*
+             * Число над точкой.
+             */
+            ctx.fillStyle = "#333";
+            ctx.font = "14px Arial";
+            ctx.textAlign = "center";
+
+            ctx.fillText(
+                value,
+                x,
+                y - 10
+            );
+
+
+            /*
+             * Дата.
+             */
+            ctx.fillStyle = "#666";
+            ctx.font = "12px Arial";
+
+            ctx.fillText(
+                dates[index],
+                x,
+                canvas.height - 20
+            );
+
+
+            /*
+             * Соединяем точки.
+             */
+            if (index > 0) {
+
+                const previousValue =
+                    values[index - 1];
+
+                const previousX =
+                    padding +
+                    ((index - 1) /
+                    Math.max(values.length - 1, 1))
+                    * chartWidth;
+
+                const previousY =
+                    canvas.height -
+                    padding -
+                    (previousValue / maxValue)
+                    * chartHeight;
+
+
+                ctx.beginPath();
+
+                ctx.moveTo(
+                    previousX,
+                    previousY
+                );
+
+                ctx.lineTo(
+                    x,
+                    y
+                );
+
+                ctx.strokeStyle = "#4A90E2";
+                ctx.lineWidth = 3;
+
+                ctx.stroke();
+            }
+
+        });
+
+    }
+
+
+    /*
+     * Рисуем график.
+     */
+    drawChart();
+
+
+    /*
+     * Перерисовываем при изменении
+     * размера окна.
+     */
+    window.addEventListener(
+        "resize",
+        drawChart
+    );
+
+</script>
 
 </body>
 </html>
-           
