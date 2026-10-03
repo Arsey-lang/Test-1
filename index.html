@@ -1,11 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мой Простой Сайт</title>
+
     <style>
-        /* Базовые стили для внешнего вида */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -14,17 +19,20 @@
             background-color: #f4f4f9;
             color: #333;
         }
+
         header {
             background-color: #4A90E2;
             color: white;
             text-align: center;
             padding: 2rem 1rem;
         }
+
         main {
             max-width: 800px;
             margin: 2rem auto;
             padding: 0 1rem;
         }
+
         .card {
             background: white;
             padding: 2rem;
@@ -32,9 +40,209 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 1.5rem;
         }
+
         h1, h2 {
             margin-top: 0;
         }
+
+        /* -----------------------------
+           АНИМАЦИЯ ЖЕЛЕЗНОЙ ДОРОГИ
+        ------------------------------ */
+
+        .railway {
+            position: relative;
+            height: 230px;
+            margin: 3rem 0;
+            overflow: hidden;
+            background: #dfe3e8;
+            border-radius: 12px;
+        }
+
+        /* Две основные рельсы */
+        .rail {
+            position: absolute;
+            width: 100%;
+            height: 6px;
+            background: #555;
+            left: 0;
+        }
+
+        .rail.one {
+            top: 95px;
+        }
+
+        .rail.two {
+            top: 145px;
+        }
+
+        /* Шпалы */
+        .sleepers {
+            position: absolute;
+            width: 120%;
+            left: -10%;
+            top: 91px;
+            height: 60px;
+
+            background: repeating-linear-gradient(
+                90deg,
+                #765438 0,
+                #765438 8px,
+                transparent 8px,
+                transparent 45px
+            );
+
+            opacity: 0.8;
+        }
+
+        /*
+           Вторая ветка.
+           Она начинается с обычного пути,
+           а затем постепенно уходит вверх.
+        */
+        .switch-rail {
+            position: absolute;
+            width: 75%;
+            height: 6px;
+            background: #555;
+            left: 25%;
+            top: 145px;
+            transform-origin: left center;
+            transform: rotate(-12deg);
+        }
+
+        .switch-rail.second {
+            top: 95px;
+            transform: rotate(12deg);
+        }
+
+        /* Поезд */
+        .train {
+            position: absolute;
+            left: -180px;
+            top: 60px;
+            width: 150px;
+            height: 70px;
+            background: #e74c3c;
+            border-radius: 12px 18px 5px 5px;
+
+            animation: trainMove 8s linear infinite;
+            z-index: 5;
+        }
+
+        /* Окна */
+        .window {
+            position: absolute;
+            width: 30px;
+            height: 25px;
+            background: #9ddcff;
+            border: 3px solid #333;
+            top: 12px;
+        }
+
+        .window.one {
+            left: 20px;
+        }
+
+        .window.two {
+            left: 60px;
+        }
+
+        .window.three {
+            left: 100px;
+        }
+
+        /* Колёса */
+        .wheel {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #222;
+            bottom: -14px;
+            border: 5px solid #555;
+
+            animation: wheels 0.25s linear infinite;
+        }
+
+        .wheel.left {
+            left: 25px;
+        }
+
+        .wheel.right {
+            right: 25px;
+        }
+
+        /* Эффект перехода на новую ветку */
+        .train::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 4px;
+            background: rgba(255,255,255,0.5);
+            top: 35px;
+            left: -20px;
+            opacity: 0;
+        }
+
+        /* Движение поезда */
+        @keyframes trainMove {
+
+            0% {
+                left: -180px;
+                top: 60px;
+                transform: rotate(0deg);
+            }
+
+            35% {
+                left: 35%;
+                top: 60px;
+                transform: rotate(0deg);
+            }
+
+            /*
+             * Здесь поезд начинает переходить
+             * на новую ветку.
+             */
+            50% {
+                left: 50%;
+                top: 35px;
+                transform: rotate(-8deg);
+            }
+
+            65% {
+                left: 65%;
+                top: 15px;
+                transform: rotate(-12deg);
+            }
+
+            100% {
+                left: 110%;
+                top: -5px;
+                transform: rotate(-12deg);
+            }
+        }
+
+        /* Вращение колёс */
+        @keyframes wheels {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Подпись */
+        .railway-title {
+            position: absolute;
+            left: 20px;
+            top: 15px;
+            font-weight: bold;
+            color: #555;
+            z-index: 10;
+        }
+
         footer {
             text-align: center;
             padding: 1.5rem;
@@ -42,8 +250,25 @@
             color: white;
             margin-top: 4rem;
         }
+
+        /* Адаптация для телефона */
+        @media (max-width: 600px) {
+
+            .railway {
+                height: 200px;
+            }
+
+            .train {
+                transform: scale(0.8);
+            }
+
+            .switch-rail {
+                width: 90%;
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -52,15 +277,55 @@
     </header>
 
     <main>
+
         <div class="card">
             <h2>Обо мне</h2>
-            <p>Привет! Это мой первый сайт, созданный вручную без использования сложных фреймворков и систем управления контентом (CMS).</p>
+            <p>
+                Привет! Это мой первый сайт, созданный вручную
+                без использования сложных фреймворков.
+            </p>
+        </div>
+
+        <!-- АНИМАЦИЯ ЖЕЛЕЗНОЙ ДОРОГИ -->
+
+        <div class="railway">
+
+            <div class="railway-title">
+                🚆 Переключение рельсов
+            </div>
+
+            <div class="sleepers"></div>
+
+            <!-- Основные рельсы -->
+            <div class="rail one"></div>
+            <div class="rail two"></div>
+
+            <!-- Ветка -->
+            <div class="switch-rail"></div>
+            <div class="switch-rail second"></div>
+
+            <!-- Поезд -->
+            <div class="train">
+
+                <div class="window one"></div>
+                <div class="window two"></div>
+                <div class="window three"></div>
+
+                <div class="wheel left"></div>
+                <div class="wheel right"></div>
+
+            </div>
+
         </div>
 
         <div class="card">
             <h2>Мои проекты или увлечения</h2>
-            <p>Здесь вы можете разместить любой текст, ссылки на социальные сети или описания ваших идей.</p>
+            <p>
+                Здесь вы можете разместить любой текст,
+                ссылки на социальные сети или описания ваших идей.
+            </p>
         </div>
+
     </main>
 
     <footer>
@@ -69,3 +334,4 @@
 
 </body>
 </html>
+        
