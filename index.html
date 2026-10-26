@@ -2112,6 +2112,25 @@
                 drawChart
             );
         }
+    // Логика работы куки-баннера
+    const banner = document.getElementById("cookieBanner");
+    const acceptBtn = document.getElementById("acceptCookies");
+
+    if (!localStorage.getItem("cookie_consent_accepted")) {
+        setTimeout(() => {
+            if(banner) banner.style.display = "flex";
+        }, 1000);
+    }
+
+    if(acceptBtn) {
+        acceptBtn.addEventListener("click", function () {
+            localStorage.setItem("cookie_consent_accepted", "true");
+            if(banner) {
+                banner.style.opacity = "0";
+                setTimeout(() => { banner.style.display = "none"; }, 300);
+            }
+        });
+    }
 
     </script>
 <!-- БАННЕР КУКИ -->
