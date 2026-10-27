@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Спица — всё о ремонте и уходе за велосипедом</title>
+<meta name="description" content="Практические статьи о ремонте, смазке и выборе велосипеда. Пошагово и без лишней воды.">
+<meta name="robots" content="index, follow, max-image-preview:large, noai, noimageai">
+<meta name="googlebot" content="noai, noimageai">
+<style>
+:root{--bg:#E8EEF1;--ink:#13283B;--muted:#51657A;--accent:#F2B705;--line:#C5D1D9;--card:#F6F9FA;
+--font:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#0F1C29;--ink:#E8EEF1;--muted:#9DB0C1;--line:#27394B;--card:#16293A}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.7 var(--font)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:70rem;margin:0 auto;padding:0 1.25rem}
+.top{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0}
+.logo{font-weight:800;font-size:1.5rem;letter-spacing:-.02em;text-decoration:none}
+nav a{margin-left:1.4rem;text-decoration:none;color:var(--muted)}
+nav a:hover{color:var(--ink)}
+.hero{padding:1.5rem 0 1rem}
+h1{font-size:clamp(2rem,5.5vw,3.5rem);line-height:1.08;letter-spacing:-.03em;margin:0 0 .8rem;font-weight:800;max-width:20ch}
+.hero p{color:var(--muted);font-size:1.15rem;max-width:36rem;margin:0}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 19rem;gap:2.5rem;padding:1rem 0 3rem}
+article{max-width:42rem}
+article h2{font-size:1.9rem;letter-spacing:-.02em;line-height:1.2;margin:.2rem 0 .6rem}
+article h3{font-size:1.25rem;margin:1.8rem 0 .4rem}
+.meta{color:var(--muted);font-size:.95rem;margin:0 0 1.2rem}
+aside h2{font-size:1.15rem;margin:0 0 .6rem}
+aside ul{list-style:none;padding:0;margin:0 0 1.5rem}
+aside li{padding:.6rem 0;border-bottom:1px solid var(--line)}
+aside a{text-decoration:none}
+aside a:hover{text-decoration:underline}
+.soon{color:var(--muted);font-size:.9rem}
+/* Рекламные блоки */
+.ad{display:block;margin:1.6rem 0;min-height:90px}
+.ad::before{content:"Реклама";display:block;font-size:.75rem;color:var(--muted);margin-bottom:.2rem}
+.ad.placeholder{border:2px dashed var(--line);border-radius:.5rem;display:flex;align-items:center;
+justify-content:center;color:var(--muted);text-align:center;padding:.5rem}
+.ad.placeholder::before{content:none}
+.ad.tall{min-height:250px}
+.btn{display:inline-block;background:var(--accent);color:#13283B;border:2px solid var(--accent);padding:.7rem 1.3rem;
+border-radius:.5rem;font:inherit;font-weight:700;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(.95)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+#privacy{border-top:2px solid var(--ink);padding:2rem 0;max-width:46rem}
+#privacy h2{font-size:1.5rem;margin:0 0 .6rem}
+#privacy p,#privacy li{color:var(--muted)}
+.foot{border-top:1px solid var(--line);padding:1.2rem 0 2.5rem;display:flex;justify-content:space-between;gap:1rem;
+flex-wrap:wrap;color:var(--muted);font-size:.95rem}
+.link{background:none;border:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer;padding:0}
+.cookie{position:fixed;left:1rem;right:1rem;bottom:1rem;max-width:42rem;margin:0 auto;z-index:50;background:var(--card);
+border:2px solid var(--ink);border-radius:.75rem;padding:1.1rem 1.25rem}
+.cookie[hidden]{display:none}
+.cookie p{margin:0 0 .9rem;font-size:.95rem;line-height:1.5}
+.cookie div{display:flex;gap:.6rem;flex-wrap:wrap}
+@media (max-width:860px){.layout{grid-template-columns:1fr}}
+</style>
+
+<!-- Google AdSense: замените ca-pub-XXXXXXXXXXXXXXXX на свой ID -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#">Спица</a>
+    <nav aria-label="Разделы"><a href="#article">Статьи</a><a href="#privacy">Конфиденциальность</a></nav>
+  </header>
+
+  <section class="hero">
+    <h1>Ремонт и уход за велосипедом своими руками</h1>
+    <p>Короткие инструкции по делу: что купить, как сделать и сколько это стоит.</p>
+  </section>
+
+  <!-- Реклама 1: над контентом -->
+  <ins class="adsbygoogle ad" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="1111111111"
+       data-ad-format="auto" data-full-width-responsive="true"></ins>
+
+  <div class="layout">
+    <main>
+      <article id="article">
+        <h2>Как смазывать цепь велосипеда: пошаговая инструкция</h2>
+        <p class="meta">Обновлено 27 октября 2026 · чтение 3 минуты</p>
+        <p>Сухая и грязная цепь изнашивается в разы быстрее, а вместе с ней и звёздочки. Смазка раз в 150–200 км
+        продлевает жизнь трансмиссии и убирает скрип. Всё, что нужно, — тряпка, смазка для цепи и десять минут.</p>
+
+        <h3>1. Очистите цепь</h3>
+        <p>Прокрутите педали назад, удерживая тряпку на цепи. Если грязь въелась, используйте обезжириватель
+        или специальный очиститель. Дайте цепи полностью высохнуть.</p>
+
+        <!-- Реклама 2: внутри статьи -->
+        <ins class="adsbygoogle ad" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="2222222222"
+             data-ad-format="fluid" data-ad-layout-key="-fb+5w+4e-db+86"></ins>
+
+        <h3>2. Нанесите смазку</h3>
+        <p>Капайте по одной капле на каждый ролик, медленно прокручивая педали назад. Выбирайте смазку по погоде:
+        «сухая» подходит для жары и пыли, «влажная» — для дождя и грязи.</p>
+
+        <h3>3. Уберите лишнее</h3>
+        <p>Подождите несколько минут и протрите цепь снаружи сухой тряпкой. Смазка нужна внутри роликов, а излишки
+        снаружи собирают грязь и пачкают одежду.</p>
+
+        <h3>Как понять, что цепь пора менять</h3>
+        <p>Если цепь вытянулась больше чем на 0,5%, её нужно заменить, пока не износилась кассета. Проверить это
+        можно специальным измерителем износа цепи — он стоит недорого и окупается за один сезон.</p>
+      </article>
+
+      <!-- Реклама 3: после статьи -->
+      <ins class="adsbygoogle ad" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="3333333333"
+           data-ad-format="auto" data-full-width-responsive="true"></ins>
+
+      <section id="privacy">
+        <h2>Конфиденциальность и cookie</h2>
+        <p>Сайт использует Google Analytics для статистики посещений и Google AdSense для показа рекламы.
+        Эти сервисы могут сохранять cookie в вашем браузере. Без вашего согласия персонализация рекламы и
+        аналитические cookie отключены.</p>
+        <ul>
+          <li>Изменить выбор можно в любой момент кнопкой «Настройки cookie» внизу страницы.</li>
+          <li>Отключить персонализированную рекламу Google можно на странице adssettings.google.com.</li>
+          <li>Другие данные о вас (имя, почта) сайт не собирает.</li>
+        </ul>
+      </section>
+    </main>
+
+    <aside aria-label="Дополнительно">
+      <h2>Скоро на сайте</h2>
+      <ul>
+        <li><span class="soon">Как подобрать размер рамы</span></li>
+        <li><span class="soon">Устранение «восьмёрки» на колесе</span></li>
+        <li><span class="soon">Регулировка тормозов за 15 минут</span></li>
+      </ul>
+      <!-- Реклама 4: боковая колонка -->
+      <ins class="adsbygoogle ad tall" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="4444444444"
+           data-ad-format="auto" data-full-width-responsive="true"></ins>
+    </aside>
+  </div>
+
+  <footer class="foot">
+    <span>© 2026 Спица</span>
+    <button type="button" id="cookie-settings" class="link">Настройки cookie</button>
+  </footer>
+</div>
+
+<div id="cookie-banner" class="cookie" role="dialog" aria-labelledby="ck-title" hidden>
+  <p id="ck-title">Мы используем cookie для статистики (Google Analytics) и рекламы (Google AdSense). Разрешите их, чтобы
+  реклама была релевантнее, или откажитесь — тогда будет показываться неперсонализированная реклама.</p>
+  <div>
+    <button type="button" id="cookie-accept" class="btn">Разрешить</button>
+    <button type="button" id="cookie-decline" class="btn ghost">Отклонить</button>
+  </div>
+</div>
+
+<script>
+// ===== НАСТРОЙКИ: впишите свои значения =====
+const GA_ID  = 'G-XXXXXXXXXX';              // Google Analytics 4
+const PUB_ID = 'ca-pub-XXXXXXXXXXXXXXXX';   // Google AdSense
+// ============================================
+
+(() => {
+  const $ = (id) => document.getElementById(id);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+
+  // Consent Mode v2: по умолчанию всё запрещено
+  gtag('consent', 'default', {
+    ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied', analytics_storage:'denied'
+  });
+
+  const getConsent = () => (document.cookie.match(/(?:^|; )consent=(granted|denied)/) || [])[1] || null;
+  const setConsent = (v) => {
+    document.cookie = 'consent=' + v + '; max-age=' + (60*60*24*180) + '; path=/; SameSite=Lax' +
+      (location.protocol === 'https:' ? '; Secure' : '');
+  };
+  const clearGa = () => document.cookie.split('; ').forEach((c) => {
+    const n = c.split('=')[0];
+    if (n === '_ga' || n.indexOf('_ga_') === 0) document.cookie = n + '=; max-age=0; path=/';
+  });
+
+  let gaLoaded = false;
+  function loadGA(){
+    if (gaLoaded || GA_ID.indexOf('XXXX') > -1) return;
+    gaLoaded = true;
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_ID);
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  const banner = $('cookie-banner');
+  function apply(v){
+    if (v === 'granted'){
+      gtag('consent', 'update', { analytics_storage:'granted', ad_storage:'granted',
+        ad_user_data:'granted', ad_personalization:'granted' });
+      loadGA();
+    } else {
+      gtag('consent', 'update', { analytics_storage:'denied', ad_storage:'denied',
+        ad_user_data:'denied', ad_personalization:'denied' });
+      clearGa();
+    }
+  }
+  $('cookie-accept').onclick  = () => { setConsent('granted'); apply('granted'); banner.hidden = true; };
+  $('cookie-decline').onclick = () => { setConsent('denied');  apply('denied');  banner.hidden = true; };
+  $('cookie-settings').onclick = () => { banner.hidden = false; };
+
+  const saved = getConsent();
+  if (saved) apply(saved); else banner.hidden = false;
+
+  // Рекламные блоки: пока ID не вписан, показываем заглушки
+  document.querySelectorAll('ins.adsbygoogle').forEach((el) => {
+    if (PUB_ID.indexOf('XXXX') > -1) {
+      el.className = el.className.replace('adsbygoogle', '').trim() + ' placeholder';
+      el.textContent = 'Здесь будет реклама';
+    } else {
+      el.setAttribute('data-ad-client', PUB_ID);
+      try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+    }
+  });
+})();
+</script>
+</body>
+</html>
