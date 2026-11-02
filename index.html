@@ -1,2162 +1,967 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CTKPMP4P56"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-CTKPMP4P56');
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta name="theme-color" content="#f5f7fb">
-    <meta name="description" content="Моя личная страница с интерактивной статистикой и аналитикой посещений.">
-
-    <title>Мой сайт — личная панель</title>
-
-    <style>
-        /* =========================
-           ОСНОВНЫЕ НАСТРОЙКИ
-        ========================= */
-
-        :root {
-            color-scheme: light;
-
-            --bg: #f5f7fb;
-            --surface: #ffffff;
-            --surface-secondary: #f7f9fd;
-            --text: #172033;
-            --muted: #7b8498;
-            --border: #e8ecf4;
-
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
-            --primary-soft: #eef0ff;
-
-            --green: #10b981;
-            --green-soft: #e7faf2;
-
-            --shadow:
-                0 8px 30px rgba(31, 41, 75, 0.045);
-
-            --radius: 20px;
-        }
-
-        body.dark {
-            color-scheme: dark;
-
-            --bg: #10131d;
-            --surface: #191e2b;
-            --surface-secondary: #202637;
-            --text: #f1f5f9;
-            --muted: #9ba6bd;
-            --border: #2c3448;
-
-            --primary: #818cf8;
-            --primary-hover: #a5b4fc;
-            --primary-soft: #292c4b;
-
-            --green: #34d399;
-            --green-soft: #173a35;
-
-            --shadow:
-                0 8px 30px rgba(0, 0, 0, 0.12);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-
-            font-family:
-                Inter,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Arial,
-                sans-serif;
-
-            background: var(--bg);
-            color: var(--text);
-
-            line-height: 1.6;
-
-            transition:
-                background 0.25s ease,
-                color 0.25s ease;
-        }
-
-        button {
-            font: inherit;
-        }
-
-        button:focus-visible,
-        a:focus-visible {
-            outline: 3px solid var(--primary);
-            outline-offset: 4px;
-        }
-
-        button:disabled {
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-
-        .container {
-            width: min(1120px, calc(100% - 40px));
-            margin: 0 auto;
-        }
-
-        /* =========================
-           ШАПКА
-        ========================= */
-
-        .header {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-
-            background: var(--surface);
-
-            border-bottom: 1px solid var(--border);
-
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-
-        .header-inner {
-            min-height: 76px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 20px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-
-            font-size: 18px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .brand-icon {
-            display: grid;
-            place-items: center;
-
-            width: 42px;
-            height: 42px;
-
-            border-radius: 14px;
-
-            color: white;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #818cf8,
-                    #6366f1 60%,
-                    #4f46e5
-                );
-
-            box-shadow:
-                0 5px 15px rgba(99, 102, 241, 0.25);
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .date-label {
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        .icon-button {
-            width: 42px;
-            height: 42px;
-
-            display: grid;
-            place-items: center;
-
-            border: 1px solid var(--border);
-            border-radius: 13px;
-
-            color: var(--text);
-            background: var(--surface);
-
-            cursor: pointer;
-
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease;
-        }
-
-        .icon-button:hover {
-            background: var(--surface-secondary);
-            transform: translateY(-2px);
-        }
-
-        /* =========================
-           ОСНОВНОЙ КОНТЕНТ
-        ========================= */
-
-        main {
-            padding-top: 42px;
-            padding-bottom: 50px;
-        }
-
-        .welcome {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-
-            gap: 20px;
-            margin-bottom: 30px;
-
-            animation: fadeUp 0.5s ease both;
-        }
-
-        .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-
-            margin-bottom: 12px;
-
-            color: var(--primary);
-
-            font-size: 12px;
-            font-weight: 800;
-
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-
-            border-radius: 50%;
-            background: var(--green);
-
-            box-shadow: 0 0 0 4px var(--green-soft);
-        }
-
-        h1,
-        h2,
-        p {
-            margin-top: 0;
-        }
-
-        h1 {
-            margin-bottom: 10px;
-
-            font-size: clamp(28px, 4vw, 38px);
-            line-height: 1.2;
-            letter-spacing: -1.5px;
-        }
-
-        .welcome p {
-            max-width: 600px;
-            margin-bottom: 0;
-
-            color: var(--muted);
-            font-size: 15px;
-        }
-
-        .primary-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 9px;
-
-            min-height: 46px;
-            padding: 0 18px;
-
-            border: none;
-            border-radius: 13px;
-
-            color: #fff;
-            background: var(--primary);
-
-            font-size: 14px;
-            font-weight: 700;
-
-            cursor: pointer;
-
-            transition:
-                background 0.2s ease,
-                transform 0.2s ease;
-        }
-
-        .primary-button:hover {
-            background: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-
-        /* =========================
-           КАРТОЧКИ СТАТИСТИКИ
-        ========================= */
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-
-        .card {
-            min-width: 0;
-
-            padding: 24px;
-
-            background: var(--surface);
-
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-
-            box-shadow: var(--shadow);
-
-            transition:
-                transform 0.25s ease,
-                border-color 0.25s ease,
-                background 0.25s ease;
-
-            animation: fadeUp 0.6s ease both;
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-            border-color: var(--primary);
-        }
-
-        .stats-grid .card:nth-child(2) {
-            animation-delay: 0.08s;
-        }
-
-        .stats-grid .card:nth-child(3) {
-            animation-delay: 0.16s;
-        }
-
-        .stat-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 12px;
-            margin-bottom: 22px;
-        }
-
-        .stat-title {
-            margin: 0;
-
-            color: var(--muted);
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .stat-icon {
-            width: 44px;
-            height: 44px;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 14px;
-
-            color: var(--primary);
-            background: var(--primary-soft);
-
-            font-size: 21px;
-        }
-
-        .stat-icon.green {
-            color: var(--green);
-            background: var(--green-soft);
-        }
-
-        .stat-number {
-            margin-bottom: 8px;
-
-            font-size: clamp(30px, 4vw, 38px);
-            line-height: 1.1;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-
-            overflow-wrap: anywhere;
-        }
-
-        .stat-description {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        .stat-description strong {
-            color: var(--green);
-            font-weight: 700;
-        }
-
-        /* =========================
-           СЕТКА КОНТЕНТА
-        ========================= */
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.8fr) minmax(260px, 1fr);
-
-            gap: 24px;
-            align-items: start;
-        }
-
-        .section-card {
-            padding: 26px;
-
-            background: var(--surface);
-
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-
-            box-shadow: var(--shadow);
-
-            animation: fadeUp 0.7s ease both;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-
-        .section-header h2 {
-            margin-bottom: 5px;
-
-            font-size: 18px;
-            letter-spacing: -0.4px;
-        }
-
-        .section-subtitle {
-            margin-bottom: 0;
-
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        /* =========================
-           ПЕРЕКЛЮЧАТЕЛЬ ГРАФИКА
-        ========================= */
-
-        .chart-controls {
-            display: flex;
-            gap: 5px;
-
-            padding: 4px;
-
-            border: 1px solid var(--border);
-            border-radius: 11px;
-
-            background: var(--surface-secondary);
-        }
-
-        .chart-button {
-            padding: 7px 10px;
-
-            border: none;
-            border-radius: 8px;
-
-            color: var(--muted);
-            background: transparent;
-
-            font-size: 12px;
-            font-weight: 700;
-
-            cursor: pointer;
-        }
-
-        .chart-button.active {
-            color: var(--primary);
-            background: var(--surface);
-
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .chart-wrap {
-            position: relative;
-            width: 100%;
-            height: 290px;
-        }
-
-        canvas {
-            display: block;
-
-            width: 100%;
-            height: 100%;
-        }
-
-        .chart-tooltip {
-            position: absolute;
-            z-index: 2;
-
-            display: none;
-
-            padding: 9px 12px;
-
-            border: 1px solid var(--border);
-            border-radius: 10px;
-
-            color: var(--text);
-            background: var(--surface);
-
-            box-shadow: var(--shadow);
-
-            font-size: 12px;
-            line-height: 1.6;
-
-            pointer-events: none;
-            white-space: nowrap;
-        }
-
-        /* =========================
-           БЛОК "ОБО МНЕ"
-        ========================= */
-
-        .about-card {
-            margin-bottom: 24px;
-        }
-
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-
-            margin-bottom: 22px;
-        }
-
-        .avatar {
-            width: 58px;
-            height: 58px;
-
-            flex-shrink: 0;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 18px;
-
-            color: white;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #818cf8,
-                    #6366f1
-                );
-
-            font-size: 25px;
-        }
-
-        .profile h2 {
-            margin-bottom: 4px;
-            font-size: 17px;
-        }
-
-        .profile p {
-            margin-bottom: 0;
-
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        .about-text {
-            margin-bottom: 20px;
-
-            color: var(--muted);
-            font-size: 14px;
-            line-height: 1.8;
-        }
-
-        .tag-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .tag {
-            padding: 7px 11px;
-
-            border-radius: 9px;
-
-            color: var(--primary);
-            background: var(--primary-soft);
-
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        /* =========================
-           БЛОК ИНФОРМАЦИИ
-        ========================= */
-
-        .info-list {
-            display: grid;
-            gap: 17px;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .info-icon {
-            width: 35px;
-            height: 35px;
-
-            flex-shrink: 0;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 11px;
-
-            background: var(--surface-secondary);
-
-            font-size: 16px;
-        }
-
-        .info-item h3 {
-            margin-bottom: 3px;
-
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .info-item p {
-            margin-bottom: 0;
-
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        .divider {
-            height: 1px;
-            margin: 22px 0;
-
-            background: var(--border);
-        }
-
-        /* =========================
-           УВЕДОМЛЕНИЯ
-        ========================= */
-
-        .notice {
-            display: flex;
-            align-items: flex-start;
-            gap: 11px;
-
-            margin-top: 24px;
-            padding: 15px;
-
-            border: 1px solid var(--border);
-            border-radius: 13px;
-
-            background: var(--surface-secondary);
-
-            color: var(--muted);
-            font-size: 12px;
-            line-height: 1.7;
-        }
-
-        .notice-icon {
-            flex-shrink: 0;
-            font-size: 17px;
-        }
-
-        /* =========================
-           ПОДВАЛ
-        ========================= */
-
-        footer {
-            padding: 25px 0;
-
-            border-top: 1px solid var(--border);
-
-            color: var(--muted);
-            font-size: 12px;
-        }
-
+    <meta name="description" content="Моя личная страница с игровым казино БелБэт."><title>MySpace — личная страница</title>
+
+<!-- GOOGLE ANALYTICS -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CTKPMP4P56"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CTKPMP4P56');
+</script>
+
+<style>
+    :root {
+        color-scheme: light;
+        --bg: #f5f7fb;
+        --surface: #ffffff;
+        --text: #172033;
+        --muted: #7b8498;
+        --border: #e8ecf4;
+        --primary: #6366f1;
+        --shadow: 0 8px 30px rgba(31,41,75,.045);
+        --radius: 20px;
+    }
+
+    body.dark {
+        color-scheme: dark;
+        --bg: #10131d;
+        --surface: #191e2b;
+        --text: #f1f5f9;
+        --muted: #9ba6bd;
+        --border: #2c3448;
+        --primary: #818cf8;
+        --shadow: 0 8px 30px rgba(0,0,0,.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        transition: background .25s, color .25s;
+    }
+
+    .container {
+        width: min(1120px, calc(100% - 40px));
+        margin: auto;
+    }
+
+    .header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+        min-height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .brand-icon {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        color: white;
+        background: linear-gradient(135deg,#818cf8,#6366f1,#4f46e5);
+    }
+
+    .icon-button {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        color: var(--text);
+        background: var(--surface);
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    main {
+        padding-top: 42px;
+        padding-bottom: 50px;
+    }
+
+    .welcome {
+        margin-bottom: 30px;
+    }
+
+    .eyebrow {
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 12px;
+    }
+
+    h1 {
+        margin: 0 0 10px;
+        font-size: clamp(28px,4vw,38px);
+        line-height: 1.2;
+    }
+
+    .welcome p {
+        color: var(--muted);
+        font-size: 15px;
+    }
+
+    .section-card {
+        padding: 26px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+    }
+
+    .about {
+        margin-bottom: 30px;
+    }
+
+    .about h2 {
+        margin-top: 0;
+    }
+
+    .about p {
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .tag {
+        padding: 7px 11px;
+        border-radius: 9px;
+        color: var(--primary);
+        background: rgba(99,102,241,.1);
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    footer {
+        padding: 25px 0;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    @media(max-width:600px) {
+        .container { width: calc(100% - 28px); }
+        main { padding-top: 28px; }
+        .section-card { padding: 19px; }
         .footer-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 15px;
+            flex-direction: column;
         }
+    }
+</style>
 
-        /* =========================
-           АНИМАЦИИ
-        ========================= */
+<!-- СТИЛИ КАЗИНО -->
+<style>
+    .bb {
+        --gold:#ffd54a;
+        margin:44px 0 10px;
+        padding:clamp(16px,3vw,30px);
+        border-radius:26px;
+        color:#fff;
+        position:relative;
+        overflow:hidden;
+        background:radial-gradient(ellipse at top,#4a0d1a,#14040a 70%);
+        border:2px solid #8a6a16;
+        box-shadow:0 0 0 5px #1a0a0e,0 0 45px rgba(255,200,60,.2),inset 0 0 70px rgba(0,0,0,.65)
+    }
 
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(14px);
-            }
+    .bb * { box-sizing:border-box }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+    .bb-top {
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:14px;
+        flex-wrap:wrap;
+        margin-bottom:16px
+    }
+
+    .bb-logo {
+        font-size:clamp(26px,5vw,40px);
+        font-weight:900;
+        letter-spacing:2px;
+        margin:0;
+        background:linear-gradient(#fff3b0,#ffd54a 50%,#b8860b);
+        -webkit-background-clip:text;
+        background-clip:text;
+        color:transparent;
+        filter:drop-shadow(0 0 10px rgba(255,200,60,.45))
+    }
+
+    .bb-logo small {
+        display:block;
+        font-size:11px;
+        letter-spacing:3px;
+        color:#e9c46a;
+        -webkit-text-fill-color:#e9c46a;
+        font-weight:600
+    }
+
+    .bb-bal {
+        display:flex;
+        align-items:center;
+        gap:10px;
+        padding:10px 18px;
+        border-radius:40px;
+        background:#0c0206;
+        border:2px solid var(--gold);
+        box-shadow:0 0 18px rgba(255,200,60,.3);
+        font-size:20px;
+        font-weight:800;
+        color:var(--gold)
+    }
+
+    .bb-tabs {
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+        margin-bottom:18px
+    }
+
+    .bb-tab {
+        flex:1;
+        min-width:120px;
+        padding:12px 10px;
+        border-radius:14px;
+        border:1px solid #6b4a10;
+        background:#240a12;
+        color:#f3e2b3;
+        font-weight:700;
+        font-size:13px;
+        cursor:pointer;
+        transition:.2s
+    }
+
+    .bb-tab span {
+        display:block;
+        font-size:24px
+    }
+
+    .bb-tab:hover { transform:translateY(-2px) }
+
+    .bb-tab.on {
+        background:linear-gradient(#ffd54a,#c9921a);
+        color:#2a1100;
+        box-shadow:0 0 20px rgba(255,200,60,.5)
+    }
+
+    .bb-stage {
+        border-radius:22px;
+        padding:18px;
+        text-align:center;
+        border:3px solid #c9a227;
+        background:linear-gradient(160deg,var(--c1),var(--c2));
+        box-shadow:inset 0 0 40px rgba(0,0,0,.55),0 10px 30px rgba(0,0,0,.5)
+    }
+
+    .bb-lights {
+        height:12px;
+        margin-bottom:12px;
+        background:radial-gradient(circle,#fff6c4 3px,#ffb800 4px,transparent 5px) 0 0/24px 12px;
+        animation:bbl 1s steps(2) infinite
+    }
+
+    @keyframes bbl { 50% { opacity:.35 } }
+
+    .bb-name {
+        margin:0 0 14px;
+        font-size:clamp(18px,3.5vw,26px);
+        color:#fff3b0;
+        text-shadow:0 0 14px rgba(255,220,100,.7)
+    }
+
+    .bb-reels {
+        display:flex;
+        justify-content:center;
+        gap:clamp(5px,1.5vw,12px);
+        padding:12px;
+        border-radius:16px;
+        background:#0a0305;
+        border:3px solid #ffd54a;
+        box-shadow:inset 0 0 20px #000;
+        width:fit-content;
+        max-width:100%;
+        margin:0 auto 14px
+    }
+
+    .bb-reel {
+        width:clamp(50px,13vw,96px);
+        height:clamp(64px,16vw,116px);
+        display:grid;
+        place-items:center;
+        font-size:clamp(30px,8vw,62px);
+        border-radius:10px;
+        background:linear-gradient(#cfcfcf,#fff 30%,#fff 70%,#cfcfcf)
+    }
+
+    .bb-reel.spin {
+        filter:blur(1.5px);
+        transform:scaleY(.96)
+    }
+
+    .bb-reel.win {
+        animation:bbw .5s ease 4;
+        box-shadow:0 0 22px 6px #ffd54a
+    }
+
+    @keyframes bbw { 50% { transform:scale(1.1) } }
+
+    .bb-msg {
+        min-height:30px;
+        font-size:18px;
+        font-weight:800;
+        margin-bottom:10px
+    }
+
+    .bb-ctl {
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
+        flex-wrap:wrap
+    }
+
+    .bb-sm {
+        width:42px;
+        height:42px;
+        border-radius:50%;
+        border:2px solid var(--gold);
+        background:#1a0a0e;
+        color:var(--gold);
+        font-size:22px;
+        font-weight:900;
+        cursor:pointer
+    }
+
+    .bb-bet {
+        min-width:110px;
+        font-weight:800;
+        font-size:16px;
+        color:var(--gold)
+    }
+
+    .bb-go {
+        padding:14px 34px;
+        border:none;
+        border-radius:40px;
+        font-size:19px;
+        font-weight:900;
+        letter-spacing:1px;
+        color:#fff;
+        cursor:pointer;
+        background:linear-gradient(#ff5a5a,#c4121f);
+        box-shadow:0 5px 0 #7a0a14,0 0 22px rgba(255,60,60,.5);
+        transition:.1s
+    }
+
+    .bb-go:active {
+        transform:translateY(4px);
+        box-shadow:0 1px 0 #7a0a14
+    }
+
+    .bb-go:disabled,.bb-tab:disabled {
+        opacity:.5;
+        cursor:not-allowed
+    }
+
+    .bb-pay {
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:6px 14px;
+        margin-top:16px;
+        font-size:12px;
+        color:#f3e2b3
+    }
+
+    .bb-wheelbox {
+        position:relative;
+        width:min(270px,80vw);
+        height:min(270px,80vw);
+        margin:0 auto 14px
+    }
+
+    .bb-wheel {
+        position:absolute;
+        inset:0;
+        border-radius:50%;
+        border:6px solid var(--gold);
+        box-shadow:0 0 25px rgba(255,200,60,.5),inset 0 0 20px #000;
+        transition:transform 4s cubic-bezier(.15,.7,.1,1)
+    }
+
+    .bb-wheel i {
+        position:absolute;
+        left:50%;
+        top:50%;
+        width:44px;
+        height:22px;
+        margin:-11px 0 0 -22px;
+        text-align:center;
+        font-style:normal;
+        font-weight:900;
+        font-size:15px;
+        line-height:22px;
+        color:#fff;
+        text-shadow:0 1px 3px #000
+    }
+
+    .bb-ptr {
+        position:absolute;
+        left:50%;
+        top:-12px;
+        transform:translateX(-50%);
+        font-size:30px;
+        z-index:2;
+        filter:drop-shadow(0 2px 3px #000)
+    }
+
+    .bb-note {
+        margin:16px 0 0;
+        font-size:11px;
+        color:#b9a77a;
+        text-align:center
+    }
+
+    .bb-coin {
+        position:absolute;
+        top:-30px;
+        font-size:26px;
+        pointer-events:none;
+        animation:bbc 1.8s linear forwards
+    }
+
+    @keyframes bbc {
+        to {
+            transform:translateY(520px) rotate(540deg);
+            opacity:.2
         }
+    }
+</style>
 
-        /* =========================
-           АДАПТИВНОСТЬ
-        ========================= */
-
-        @media (max-width: 900px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-
-                gap: 20px;
-            }
-
-            .about-card {
-                margin-bottom: 0;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                width: calc(100% - 28px);
-            }
-
-            .header-inner {
-                min-height: 66px;
-            }
-
-            .brand {
-                gap: 9px;
-                font-size: 15px;
-            }
-
-            .brand-icon {
-                width: 37px;
-                height: 37px;
-                border-radius: 12px;
-            }
-
-            .date-label {
-                display: none;
-            }
-
-            main {
-                padding-top: 28px;
-            }
-
-            .welcome {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .welcome .primary-button {
-                width: 100%;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
-
-            .card {
-                padding: 20px;
-            }
-
-            .stat-top {
-                margin-bottom: 16px;
-            }
-
-            .content-grid {
-                gap: 16px;
-            }
-
-            .section-card {
-                padding: 19px;
-            }
-
-            .section-header {
-                flex-direction: column;
-                gap: 13px;
-            }
-
-            .chart-controls {
-                align-self: stretch;
-            }
-
-            .chart-button {
-                flex: 1;
-            }
-
-            .chart-wrap {
-                height: 250px;
-            }
-
-            .sidebar {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .footer-inner {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                scroll-behavior: auto !important;
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- ШАПКА -->
-
-    <header class="header">
-        <div class="container header-inner">
-
-            <div class="brand">
-                <div class="brand-icon" aria-hidden="true">✦</div>
-                <span>MySpace</span>
-            </div>
-
-            <div class="header-actions">
-
-                <span class="date-label" id="headerDate"></span>
-
-                <button
-                    class="icon-button"
-                    id="themeToggle"
-                    type="button"
-                    aria-label="Включить тёмную тему"
-                    title="Переключить тему"
-                >
-                    <span id="themeIcon" aria-hidden="true">🌙</span>
-                </button>
-
-            </div>
-
+</head><body><!-- ШАПКА -->
+<header class="header">
+    <div class="container header-inner">
+        <div class="brand">
+            <div class="brand-icon">✦</div>
+            <span>MySpace</span>
         </div>
-    </header>
 
-
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
-
-    <main class="container">
-
-        <!-- ПРИВЕТСТВИЕ -->
-
-        <section class="welcome">
-
-            <div>
-                <div class="eyebrow">
-                    <span class="status-dot"></span>
-                    Личная панель
-                </div>
-
-                <h1>Добро пожаловать! 👋</h1>
-
-                <p>
-                    Это твой личный сайт с аналитикой посещений.
-                    Здесь собрана основная информация и статистика.
-                </p>
-            </div>
-
-            <button
-                class="primary-button"
-                id="refreshButton"
-                type="button"
-            >
-                <span aria-hidden="true">↻</span>
-                Обновить данные
-            </button>
-
-        </section>
-
-
-        <!-- КАРТОЧКИ СТАТИСТИКИ -->
-
-        <section class="stats-grid" aria-label="Статистика">
-
-            <article class="card">
-
-                <div class="stat-top">
-                    <h2 class="stat-title">Всего посещений</h2>
-
-                    <div class="stat-icon" aria-hidden="true">
-                        ◉
-                    </div>
-                </div>
-
-                <div
-                    class="stat-number"
-                    id="totalVisits"
-                    aria-live="polite"
-                >0</div>
-
-                <div class="stat-description">
-                    Сохранено в этом браузере
-                </div>
-
-            </article>
-
-
-            <article class="card">
-
-                <div class="stat-top">
-                    <h2 class="stat-title">Сегодня</h2>
-
-                    <div class="stat-icon green" aria-hidden="true">
-                        ↗
-                    </div>
-                </div>
-
-                <div
-                    class="stat-number"
-                    id="todayVisits"
-                    aria-live="polite"
-                >0</div>
-
-                <div class="stat-description">
-                    Посещения за текущий день
-                </div>
-
-            </article>
-
-
-            <article class="card">
-
-                <div class="stat-top">
-                    <h2 class="stat-title">Активных дней</h2>
-
-                    <div class="stat-icon" aria-hidden="true">
-                        ▦
-                    </div>
-                </div>
-
-                <div
-                    class="stat-number"
-                    id="activeDays"
-                    aria-live="polite"
-                >0</div>
-
-                <div class="stat-description">
-                    Дней с сохранёнными посещениями
-                </div>
-
-            </article>
-
-        </section>
-
-
-        <!-- ГРАФИК И БОКОВАЯ ПАНЕЛЬ -->
-
-        <section class="content-grid">
-
-            <div class="section-card">
-
-                <div class="section-header">
-
-                    <div>
-                        <h2>Аналитика посещений</h2>
-
-                        <p class="section-subtitle">
-                            История посещений по дням
-                        </p>
-                    </div>
-
-                    <div
-                        class="chart-controls"
-                        role="group"
-                        aria-label="Период графика"
-                    >
-
-                        <button
-                            class="chart-button active"
-                            type="button"
-                            data-period="7"
-                            aria-pressed="true"
-                        >
-                            7 дней
-                        </button>
-
-                        <button
-                            class="chart-button"
-                            type="button"
-                            data-period="30"
-                            aria-pressed="false"
-                        >
-                            30 дней
-                        </button>
-
-                    </div>
-
-                </div>
-
-                <div class="chart-wrap" id="chartWrap">
-
-                    <canvas
-                        id="visitsChart"
-                        role="img"
-                        aria-label="График количества посещений сайта по дням"
-                    >
-                        График посещений.
-                    </canvas>
-
-                    <div
-                        class="chart-tooltip"
-                        id="chartTooltip"
-                        role="status"
-                    ></div>
-
-                </div>
-
-                <div class="notice">
-                    <span class="notice-icon" aria-hidden="true">💡</span>
-
-                    <span>
-                        График показывает посещения, сохранённые
-                        в текущем браузере. Для сбора статистики
-                        от всех посетителей потребуется серверная
-                        аналитика.
-                    </span>
-                </div>
-
-            </div>
-
-
-            <!-- БОКОВАЯ ПАНЕЛЬ -->
-
-            <aside class="sidebar">
-
-                <section class="section-card about-card">
-
-                    <div class="profile">
-
-                        <div class="avatar" aria-hidden="true">
-                            ✨
-                        </div>
-
-                        <div>
-                            <h2>Обо мне</h2>
-                            <p>Создатель сайта</p>
-                        </div>
-
-                    </div>
-
-                    <p class="about-text">
-                        Привет! Это моя личная страница,
-                        созданная с помощью HTML, CSS и JavaScript.
-                        Я развиваю свой проект и изучаю новые технологии.
-                    </p>
-
-                    <div class="tag-list">
-                        <span class="tag">HTML</span>
-                        <span class="tag">CSS</span>
-                        <span class="tag">JavaScript</span>
-                    </div>
-
-                </section>
-
-
-                <section class="section-card">
-
-                    <div class="section-header">
-                        <div>
-                            <h2>Информация</h2>
-
-                            <p class="section-subtitle">
-                                О текущем состоянии сайта
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="info-list">
-
-                        <div class="info-item">
-
-                            <div class="info-icon" aria-hidden="true">
-                                📅
-                            </div>
-
-                            <div>
-                                <h3>Сегодня</h3>
-                                <p id="todayLabel">Загрузка даты...</p>
-                            </div>
-
-                        </div>
-
-
-                        <div class="info-item">
-
-                            <div class="info-icon" aria-hidden="true">
-                                💾
-                            </div>
-
-                            <div>
-                                <h3>Хранение данных</h3>
-                                <p>Локальное хранилище браузера</p>
-                            </div>
-
-                        </div>
-
-
-                        <div class="info-item">
-
-                            <div class="info-icon" aria-hidden="true">
-                                📊
-                            </div>
-
-                            <div>
-                                <h3>Статистика</h3>
-                                <p id="storageStatus">Проверка данных...</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </section>
-
-            </aside>
-
-        </section>
-
-    </main>
-
-
-    <!-- ПОДВАЛ -->
-
-    <footer>
-        <div class="container footer-inner">
-
-            <span>
-                © <span id="currentYear">2026</span> MySpace.
-                Сделано с ❤️
-            </span>
-
-            <span>
-                HTML · CSS · JavaScript
-            </span>
-
+        <button
+            class="icon-button"
+            id="themeToggle"
+            type="button"
+            aria-label="Переключить тему"
+        >🌙</button>
+    </div>
+</header>
+
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<main class="container">
+
+    <section class="welcome">
+        <div class="eyebrow">● Личная панель</div>
+        <h1>Добро пожаловать! 👋</h1>
+        <p>Это моя личная страница. Здесь собрана основная информация и игровая зона.</p>
+    </section>
+
+    <!-- ОБО МНЕ -->
+    <section class="section-card about">
+        <h2>Обо мне ✨</h2>
+        <p>
+            Привет! Это моя личная страница, созданная
+            с помощью HTML, CSS и JavaScript.
+            Я развиваю свой проект и изучаю новые технологии.
+        </p>
+
+        <div class="tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
         </div>
-    </footer>
-
-
-    <script>
-        "use strict";
-
-        /* =========================
-           НАСТРОЙКИ
-        ========================= */
-
-        const STORAGE_KEY = "mySpaceStatistics";
-        const LEGACY_STORAGE_KEY = "siteStatistics";
-        const THEME_KEY = "mySpaceTheme";
-
-        const MAX_HISTORY_DAYS = 365;
-
-        const $ = (selector) =>
-            document.querySelector(selector);
-
-        const $$ = (selector) =>
-            document.querySelectorAll(selector);
-
-
-        /* =========================
-           РАБОТА С ДАТАМИ
-        ========================= */
-
-        /*
-         * Используем локальную дату браузера,
-         * чтобы день не смещался из-за UTC.
-         */
-
-        function getLocalDateKey(date = new Date()) {
-            const year = date.getFullYear();
-
-            const month = String(
-                date.getMonth() + 1
-            ).padStart(2, "0");
-
-            const day = String(
-                date.getDate()
-            ).padStart(2, "0");
-
-            return `${year}-${month}-${day}`;
-        }
-
-
-        function formatDate(dateKey, options = {}) {
-            const [year, month, day] =
-                dateKey.split("-").map(Number);
-
-            const date = new Date(
-                year,
-                month - 1,
-                day,
-                12
-            );
-
-            return new Intl.DateTimeFormat(
-                "ru-RU",
-                options
-            ).format(date);
-        }
-
-
-        function getLastDays(count) {
-            const dates = [];
-            const now = new Date();
-
-            for (let i = count - 1; i >= 0; i--) {
-                const date = new Date(
-                    now.getFullYear(),
-                    now.getMonth(),
-                    now.getDate() - i,
-                    12
-                );
-
-                dates.push(getLocalDateKey(date));
-            }
-
-            return dates;
-        }
-
-
-        /* =========================
-           ЗАГРУЗКА СТАТИСТИКИ
-        ========================= */
-
-        function createEmptyStatistics() {
-            return {
-                total: 0,
-                days: {}
-            };
-        }
-
-
-        function normalizeStatistics(data) {
-            if (
-                !data ||
-                typeof data !== "object" ||
-                Array.isArray(data)
-            ) {
-                return createEmptyStatistics();
-            }
-
-            const total = Number(data.total);
-
-            const rawDays =
-                data.days &&
-                typeof data.days === "object" &&
-                !Array.isArray(data.days)
-                    ? data.days
-                    : {};
-
-            const days = {};
-
-            /*
-             * Сохраняем только корректные даты
-             * и неотрицательные целые значения.
-             */
-
-            for (const [date, value] of Object.entries(rawDays)) {
-                if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-                    continue;
-                }
-
-                const parsed = new Date(
-                    `${date}T12:00:00`
-                );
-
-                if (
-                    Number.isNaN(parsed.getTime()) ||
-                    getLocalDateKey(parsed) !== date
-                ) {
-                    continue;
-                }
-
-                const visits = Number(value);
-
-                if (
-                    !Number.isSafeInteger(visits) ||
-                    visits < 0
-                ) {
-                    continue;
-                }
-
-                days[date] = visits;
-            }
-
-            const safeTotal =
-                Number.isSafeInteger(total) && total >= 0
-                    ? total
-                    : 0;
-
-            return {
-                total: safeTotal,
-                days
-            };
-        }
-
-
-        function loadStatistics() {
-            try {
-                let raw = localStorage.getItem(STORAGE_KEY);
-
-                /*
-                 * Переносим данные старой версии сайта,
-                 * если они существуют.
-                 */
-
-                if (raw === null) {
-                    const legacy =
-                        localStorage.getItem(LEGACY_STORAGE_KEY);
-
-                    if (legacy !== null) {
-                        raw = legacy;
-                    }
-                }
-
-                if (raw === null) {
-                    return {
-                        data: createEmptyStatistics(),
-                        storageAvailable: true
-                    };
-                }
-
-                return {
-                    data: normalizeStatistics(
-                        JSON.parse(raw)
-                    ),
-                    storageAvailable: true
-                };
-
-            } catch (error) {
-                console.warn(
-                    "Не удалось загрузить статистику:",
-                    error
-                );
-
-                return {
-                    data: createEmptyStatistics(),
-                    storageAvailable: false
-                };
-            }
-        }
-
-
-        let {
-            data: statistics,
-            storageAvailable
-        } = loadStatistics();
-
-
-        /* =========================
-           СОХРАНЕНИЕ СТАТИСТИКИ
-        ========================= */
-
-        function saveStatistics() {
-            try {
-                localStorage.setItem(
-                    STORAGE_KEY,
-                    JSON.stringify(statistics)
-                );
-
-                storageAvailable = true;
-
-            } catch (error) {
-                storageAvailable = false;
-
-                console.warn(
-                    "Не удалось сохранить статистику:",
-                    error
-                );
-            }
-        }
-
-
-        /* =========================
-           УЧЁТ ПОСЕЩЕНИЯ
-        ========================= */
-
-        function registerVisit() {
-            const today = getLocalDateKey();
-
-            /*
-             * При каждом открытии страницы
-             * регистрируется одно посещение.
-             *
-             * Это не уникальные пользователи:
-             * повторные открытия тоже учитываются.
-             */
-
-            statistics.total += 1;
-
-            statistics.days[today] =
-                (statistics.days[today] || 0) + 1;
-
-            /*
-             * Удаляем старые записи, чтобы
-             * хранилище не росло бесконечно.
-             */
-
-            const cutoff = getLastDays(
-                MAX_HISTORY_DAYS
-            )[0];
-
-            for (const date of Object.keys(statistics.days)) {
-                if (date < cutoff) {
-                    delete statistics.days[date];
-                }
-            }
-
-            saveStatistics();
-        }
-
-
-        /* =========================
-           ОТОБРАЖЕНИЕ СТАТИСТИКИ
-        ========================= */
-
-        function animateNumber(element, target) {
-            const duration = 550;
-            const startTime = performance.now();
-
-            function update(now) {
-                const progress = Math.min(
-                    (now - startTime) / duration,
-                    1
-                );
-
-                const eased =
-                    1 - Math.pow(1 - progress, 3);
-
-                const current = Math.round(
-                    target * eased
-                );
-
-                element.textContent =
-                    current.toLocaleString("ru-RU");
-
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                }
-            }
-
-            requestAnimationFrame(update);
-        }
-
-
-        function renderStatistics() {
-            const today = getLocalDateKey();
-
-            const todayVisits =
-                statistics.days[today] || 0;
-
-            const activeDays = Object.values(
-                statistics.days
-            ).filter(value => value > 0).length;
-
-            animateNumber(
-                $("#totalVisits"),
-                statistics.total
-            );
-
-            animateNumber(
-                $("#todayVisits"),
-                todayVisits
-            );
-
-            animateNumber(
-                $("#activeDays"),
-                activeDays
-            );
-
-            $("#storageStatus").textContent =
-                storageAvailable
-                    ? "Данные доступны"
-                    : "Хранение недоступно";
-
-            $("#todayLabel").textContent =
-                formatDate(today, {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric"
-                });
-        }
-
-
-        /* =========================
-           РИСОВАНИЕ ГРАФИКА
-        ========================= */
-
-        const canvas = $("#visitsChart");
-        const ctx = canvas.getContext("2d");
-
-        const chartWrap = $("#chartWrap");
-        const tooltip = $("#chartTooltip");
-
-        let currentPeriod = 7;
-        let chartPoints = [];
-
-        function getCssVariable(name) {
-            return getComputedStyle(
-                document.body
-            ).getPropertyValue(name).trim();
-        }
-
-
-        function drawChart() {
-            if (!ctx) {
-                return;
-            }
-
-            const rect = chartWrap.getBoundingClientRect();
-
-            if (rect.width <= 0 || rect.height <= 0) {
-                return;
-            }
-
-            const width = rect.width;
-            const height = rect.height;
-
-            const dpr = Math.min(
-                window.devicePixelRatio || 1,
-                2
-            );
-
-            canvas.width = Math.round(width * dpr);
-            canvas.height = Math.round(height * dpr);
-
-            ctx.setTransform(
-                dpr,
-                0,
-                0,
-                dpr,
-                0,
-                0
-            );
-
-            ctx.clearRect(0, 0, width, height);
-
-            const styles = {
-                text: getCssVariable("--muted"),
-                primary: getCssVariable("--primary"),
-                border: getCssVariable("--border")
-            };
-
-            const dates = getLastDays(currentPeriod);
-
-            const values = dates.map(date =>
-                statistics.days[date] || 0
-            );
-
-            const maxValue = Math.max(
-                ...values,
-                1
-            );
-
-            const padding = {
-                top: 24,
-                right: 14,
-                bottom: 43,
-                left: currentPeriod === 30 ? 38 : 34
-            };
-
-            const chartWidth =
-                width - padding.left - padding.right;
-
-            const chartHeight =
-                height - padding.top - padding.bottom;
-
-            const baseY =
-                height - padding.bottom;
-
-            /*
-             * Горизонтальная сетка и подписи.
-             */
-
-            const gridSteps = 4;
-
-            ctx.font = "11px Arial";
-            ctx.textAlign = "right";
-            ctx.textBaseline = "middle";
-
-            for (let i = 0; i <= gridSteps; i++) {
-                const ratio = i / gridSteps;
-
-                const y =
-                    padding.top +
-                    chartHeight * ratio;
-
-                const value = Math.round(
-                    maxValue * (1 - ratio)
-                );
-
-                ctx.beginPath();
-
-                ctx.moveTo(padding.left, y);
-                ctx.lineTo(width - padding.right, y);
-
-                ctx.strokeStyle = styles.border;
-                ctx.lineWidth = 1;
-
-                ctx.stroke();
-
-                ctx.fillStyle = styles.text;
-
-                ctx.fillText(
-                    String(value),
-                    padding.left - 9,
-                    y
-                );
-            }
-
-            /*
-             * Координаты точек.
-             */
-
-            chartPoints = values.map(
-                (value, index) => {
-                    const x =
-                        padding.left +
-                        (
-                            index /
-                            Math.max(values.length - 1, 1)
-                        ) * chartWidth;
-
-                    const y =
-                        baseY -
-                        (value / maxValue) * chartHeight;
-
-                    return {
-                        x,
-                        y,
-                        value,
-                        date: dates[index]
-                    };
-                }
-            );
-
-            /*
-             * Градиент под линией.
-             */
-
-            if (chartPoints.length > 0) {
-                const gradient = ctx.createLinearGradient(
-                    0,
-                    padding.top,
-                    0,
-                    baseY
-                );
-
-                gradient.addColorStop(
-                    0,
-                    "rgba(99, 102, 241, 0.23)"
-                );
-
-                gradient.addColorStop(
-                    1,
-                    "rgba(99, 102, 241, 0.01)"
-                );
-
-                ctx.beginPath();
-
-                ctx.moveTo(
-                    chartPoints[0].x,
-                    baseY
-                );
-
-                chartPoints.forEach(point => {
-                    ctx.lineTo(point.x, point.y);
-                });
-
-                ctx.lineTo(
-                    chartPoints[chartPoints.length - 1].x,
-                    baseY
-                );
-
-                ctx.closePath();
-
-                ctx.fillStyle = gradient;
-                ctx.fill();
-
-                /*
-                 * Основная линия.
-                 */
-
-                ctx.beginPath();
-
-                chartPoints.forEach(
-                    (point, index) => {
-                        if (index === 0) {
-                            ctx.moveTo(
-                                point.x,
-                                point.y
-                            );
-                        } else {
-                            ctx.lineTo(
-                                point.x,
-                                point.y
-                            );
-                        }
-                    }
-                );
-
-                ctx.strokeStyle = styles.primary;
-                ctx.lineWidth = 3;
-                ctx.lineJoin = "round";
-                ctx.lineCap = "round";
-
-                ctx.stroke();
-
-                /*
-                 * Подписи дат.
-                 */
-
-                const labelStep =
-                    currentPeriod === 7 ? 1 : 5;
-
-                ctx.font = "10px Arial";
-                ctx.textAlign = "center";
-                ctx.textBaseline = "top";
-
-                chartPoints.forEach(
-                    (point, index) => {
-                        const isLast =
-                            index === chartPoints.length - 1;
-
-                        if (
-                            index % labelStep !== 0 &&
-                            !isLast
-                        ) {
-                            return;
-                        }
-
-                        ctx.fillStyle = styles.text;
-
-                        ctx.fillText(
-                            formatDate(point.date, {
-                                day: "numeric",
-                                month: "short"
-                            }),
-                            point.x,
-                            baseY + 15
-                        );
-                    }
-                );
-
-                /*
-                 * Точки графика.
-                 */
-
-                chartPoints.forEach(point => {
-                    ctx.beginPath();
-
-                    ctx.arc(
-                        point.x,
-                        point.y,
-                        currentPeriod === 7 ? 4 : 2.5,
-                        0,
-                        Math.PI * 2
-                    );
-
-                    ctx.fillStyle = styles.primary;
-                    ctx.fill();
-                });
-            }
-
-            tooltip.style.display = "none";
-        }
-
-
-        /* =========================
-           ВЗАИМОДЕЙСТВИЕ С ГРАФИКОМ
-        ========================= */
-
-        function showChartTooltip(event) {
-            if (!chartPoints.length) {
-                return;
-            }
-
-            const rect = canvas.getBoundingClientRect();
-
-            const mouseX = event.clientX - rect.left;
-            const mouseY = event.clientY - rect.top;
-
-            let closest = null;
-            let closestDistance = Infinity;
-
-            for (const point of chartPoints) {
-                const distance = Math.hypot(
-                    point.x - mouseX,
-                    point.y - mouseY
-                );
-
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closest = point;
-                }
-            }
-
-            if (!closest || closestDistance > 28) {
-                tooltip.style.display = "none";
-                return;
-            }
-
-            tooltip.innerHTML = "";
-
-            const dateLine = document.createElement("div");
-            dateLine.textContent = formatDate(
-                closest.date,
-                {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric"
-                }
-            );
-
-            const valueLine = document.createElement("strong");
-
-            valueLine.textContent =
-                `Посещений: ${closest.value}`;
-
-            tooltip.append(
-                dateLine,
-                valueLine
-            );
-
-            tooltip.style.display = "block";
-
-            const tooltipWidth = tooltip.offsetWidth;
-            const tooltipHeight = tooltip.offsetHeight;
-
-            const left = Math.max(
-                4,
-                Math.min(
-                    closest.x + 12,
-                    rect.width - tooltipWidth - 4
-                )
-            );
-
-            const top = Math.max(
-                4,
-                Math.min(
-                    closest.y - tooltipHeight - 12,
-                    rect.height - tooltipHeight - 4
-                )
-            );
-
-            tooltip.style.left = `${left}px`;
-            tooltip.style.top = `${top}px`;
-        }
-
-
-        canvas.addEventListener(
-            "pointermove",
-            showChartTooltip
-        );
-
-        canvas.addEventListener(
-            "pointerleave",
-            () => {
-                tooltip.style.display = "none";
-            }
-        );
-
-
-        /* =========================
-           ПЕРЕКЛЮЧЕНИЕ ПЕРИОДА
-        ========================= */
-
-        $$(".chart-button").forEach(button => {
-            button.addEventListener("click", () => {
-                currentPeriod = Number(
-                    button.dataset.period
-                );
-
-                $$(".chart-button").forEach(item => {
-                    const active = item === button;
-
-                    item.classList.toggle(
-                        "active",
-                        active
-                    );
-
-                    item.setAttribute(
-                        "aria-pressed",
-                        String(active)
-                    );
-                });
-
-                drawChart();
-            });
-        });
-
-
-        /* =========================
-           СВЕТЛАЯ И ТЁМНАЯ ТЕМЫ
-        ========================= */
-
-        function getSavedTheme() {
-            try {
-                const saved = localStorage.getItem(
-                    THEME_KEY
-                );
-
-                if (
-                    saved === "dark" ||
-                    saved === "light"
-                ) {
-                    return saved;
-                }
-            } catch (error) {
-                console.warn(
-                    "Не удалось прочитать тему:",
-                    error
-                );
-            }
-
-            return window.matchMedia(
-                "(prefers-color-scheme: dark)"
-            ).matches
-                ? "dark"
-                : "light";
-        }
-
-
-        function applyTheme(theme) {
-            const isDark = theme === "dark";
-
-            document.body.classList.toggle(
-                "dark",
-                isDark
-            );
-
-            $("#themeIcon").textContent =
-                isDark ? "☀️" : "🌙";
-
-            $("#themeToggle").setAttribute(
-                "aria-label",
-                isDark
-                    ? "Включить светлую тему"
-                    : "Включить тёмную тему"
-            );
-
-            const themeColor = isDark
-                ? "#10131d"
-                : "#f5f7fb";
-
-            document
-                .querySelector('meta[name="theme-color"]')
-                .setAttribute("content", themeColor);
-
-            drawChart();
-        }
-
-
-        let currentTheme = getSavedTheme();
-
-        applyTheme(currentTheme);
-
-
-        $("#themeToggle").addEventListener(
-            "click",
-            () => {
-                currentTheme =
-                    currentTheme === "dark"
-                        ? "light"
-                        : "dark";
-
-                applyTheme(currentTheme);
-
-                try {
-                    localStorage.setItem(
-                        THEME_KEY,
-                        currentTheme
-                    );
-                } catch (error) {
-                    console.warn(
-                        "Не удалось сохранить тему:",
-                        error
-                    );
-                }
-            }
-        );
-
-
-        /* =========================
-           ОБНОВЛЕНИЕ ДАННЫХ
-        ========================= */
-
-        $("#refreshButton").addEventListener(
-            "click",
-            () => {
-                const result = loadStatistics();
-
-                statistics = result.data;
-                storageAvailable =
-                    result.storageAvailable;
-
-                renderStatistics();
-                drawChart();
-
-                const button = $("#refreshButton");
-
-                button.innerHTML =
-                    '<span aria-hidden="true">✓</span> Обновлено';
-
-                window.setTimeout(() => {
-                    button.innerHTML =
-                        '<span aria-hidden="true">↻</span> Обновить данные';
-                }, 1200);
-            }
-        );
-
-
-        /* =========================
-           ИНИЦИАЛИЗАЦИЯ
-        ========================= */
-
-        function initializeSite() {
-            const now = new Date();
-
-            $("#headerDate").textContent =
-                new Intl.DateTimeFormat("ru-RU", {
-                    day: "numeric",
-                    month: "short"
-                }).format(now);
-
-            $("#currentYear").textContent =
-                now.getFullYear();
-
-            /*
-             * Учитываем текущее открытие сайта.
-             */
-
-            registerVisit();
-
-            renderStatistics();
-
-            drawChart();
-        }
-
-
-        initializeSite();
-
-
-        /* =========================
-           АДАПТАЦИЯ ГРАФИКА
-        ========================= */
-
-        if ("ResizeObserver" in window) {
-            const observer = new ResizeObserver(() => {
-                drawChart();
-            });
-
-            observer.observe(chartWrap);
-        } else {
-            window.addEventListener(
-                "resize",
-                drawChart
-            );
-        }
-    // Логика работы куки-баннера
+    </section>
+
+    <!-- КАЗИНО БЕЛБЭТ -->
+    <section class="bb" id="belbetCasino" aria-label="БелБэт казино"></section>
+
+</main>
+
+<!-- ПОДВАЛ -->
+<footer>
+    <div class="container footer-inner">
+        <span>© <span id="currentYear"></span> MySpace. Сделано с ❤️</span>
+        <span>HTML · CSS · JavaScript</span>
+    </div>
+</footer>
+
+<!-- COOKIE БАННЕР -->
+<div id="cookieBanner" style="
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(500px,calc(100% - 40px));
+    background:var(--surface);
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    padding:20px;
+    z-index:9999;
+    display:none;
+    flex-direction:column;
+    gap:15px;
+">
+    <div style="font-size:14px;line-height:1.5">
+        🍪 Сайт использует файлы cookie и Google Analytics
+        для анализа посещаемости.
+        Подробнее — в политике конфиденциальности.
+    </div>
+
+    <button
+        id="acceptCookies"
+        style="
+            align-self:flex-end;
+            padding:10px 18px;
+            border:0;
+            border-radius:10px;
+            background:#6366f1;
+            color:white;
+            font-weight:700;
+            cursor:pointer;
+        "
+    >Принять</button>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+    "use strict";
+
+    // ТЕМА
+    const themeToggle = document.getElementById("themeToggle");
+
+    let theme = "light";
+
+    try {
+        theme = localStorage.getItem("mySpaceTheme") || "light";
+    } catch(e) {}
+
+    function applyTheme() {
+        document.body.classList.toggle("dark", theme === "dark");
+        themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+
+        document.querySelector('meta[name="theme-color"]')
+            .setAttribute("content", theme === "dark" ? "#10131d" : "#f5f7fb");
+    }
+
+    applyTheme();
+
+    themeToggle.addEventListener("click", () => {
+        theme = theme === "dark" ? "light" : "dark";
+        applyTheme();
+
+        try {
+            localStorage.setItem("mySpaceTheme", theme);
+        } catch(e) {}
+    });
+
+    document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+
+    // COOKIE
     const banner = document.getElementById("cookieBanner");
     const acceptBtn = document.getElementById("acceptCookies");
 
-    if (!localStorage.getItem("cookie_consent_accepted")) {
-        setTimeout(() => {
-            if(banner) banner.style.display = "flex";
-        }, 1000);
+    try {
+        if (!localStorage.getItem("cookie_consent_accepted")) {
+            setTimeout(() => {
+                banner.style.display = "flex";
+            }, 1000);
+        }
+
+        acceptBtn.addEventListener("click", () => {
+            localStorage.setItem("cookie_consent_accepted", "true");
+            banner.style.display = "none";
+        });
+    } catch(e) {
+        banner.style.display = "none";
+    }
+</script>
+
+<!-- ===== ЛОГИКА КАЗИНО БЕЛБЭТ ===== -->
+<script>
+(function () {
+    const root = document.getElementById("belbetCasino");
+    if (!root) return;
+
+    const KEY = "belbetBalance2";
+    const BETS = [10, 20, 50, 100, 250, 500];
+
+    let bal = 1000, bi = 0, busy = false, cur = "fruit", wrot = 0;
+
+    try {
+        const s = parseInt(localStorage.getItem(KEY), 10);
+        if (s >= 0) bal = s;
+    } catch(e) {}
+
+    const save = () => {
+        try { localStorage.setItem(KEY, bal); } catch(e) {}
+    };
+
+    const MACHINES = [
+        {
+            id:"fruit", name:"Фруктовая классика", icon:"🍒",
+            reels:3, c1:"#c4121f", c2:"#5a060e",
+            sym:["🍒","🍋","🍊","🍇","🔔","⭐","7️⃣"],
+            w:[30,25,20,12,7,4,2],
+            pay:[5,8,12,20,40,80,200]
+        },
+        {
+            id:"egypt", name:"Золото фараонов", icon:"👑",
+            reels:5, c1:"#b8860b", c2:"#3d2703",
+            sym:["🪲","🐍","👁️","🏺","🔱","👑"],
+            w:[30,26,20,14,7,3],
+            pay:[3,4,6,12,30,80]
+        },
+        {
+            id:"space", name:"Космический джекпот", icon:"🚀",
+            reels:5, c1:"#6d28d9", c2:"#140f3d",
+            sym:["☄️","🪐","🌟","👽","🚀","💎"],
+            w:[30,26,20,14,7,3],
+            pay:[3,4,6,12,30,80]
+        }
+    ];
+
+    const WHEEL = [0,0.5,0,1,0,0.5,0,2,0,5];
+
+    root.innerHTML =
+        '<div class="bb-top">' +
+            '<h2 class="bb-logo">БЕЛБЭТ <small>CASINO • ИГРОВЫЕ АВТОМАТЫ</small></h2>' +
+            '<div class="bb-bal">🪙 <span id="bbBal"></span></div>' +
+        '</div>' +
+        '<div class="bb-tabs" id="bbTabs"></div>' +
+        '<div id="bbStage"></div>' +
+        '<p class="bb-note">Игра только для развлечения: виртуальные монеты, реальные деньги не используются. 18+</p>';
+
+    const $ = s => root.querySelector(s);
+    const tabs = $("#bbTabs");
+    const stage = $("#bbStage");
+
+    MACHINES.concat([
+        {id:"wheel",name:"Колесо фортуны",icon:"🎡"}
+    ]).forEach(m => {
+        const b = document.createElement("button");
+        b.className = "bb-tab";
+        b.dataset.id = m.id;
+        b.innerHTML = "<span>" + m.icon + "</span>" + m.name;
+        b.onclick = () => show(m.id);
+        tabs.appendChild(b);
+    });
+
+    function updateBal() {
+        $("#bbBal").textContent = bal.toLocaleString("ru-RU");
+        const bl = $("#bbBet");
+        if (bl) bl.textContent = "Ставка: " + BETS[bi];
+        save();
     }
 
-    if(acceptBtn) {
-        acceptBtn.addEventListener("click", function () {
-            localStorage.setItem("cookie_consent_accepted", "true");
-            if(banner) {
-                banner.style.opacity = "0";
-                setTimeout(() => { banner.style.display = "none"; }, 300);
-            }
+    function setMsg(t,c) {
+        const m = $("#bbMsg");
+        if (!m) return;
+        m.textContent = t;
+        m.style.color = c || "#fff";
+    }
+
+    function lock(v) {
+        busy = v;
+        root.querySelectorAll(".bb-tab,.bb-go,.bb-sm")
+            .forEach(b => b.disabled = v);
+    }
+
+    function rain() {
+        for (let i=0;i<16;i++) {
+            const c = document.createElement("span");
+            c.className = "bb-coin";
+            c.textContent = "🪙";
+            c.style.left = Math.random()*95 + "%";
+            c.style.animationDelay = Math.random()*0.6 + "s";
+            root.appendChild(c);
+            setTimeout(() => c.remove(),2600);
+        }
+    }
+
+    function pick(m) {
+        let r = Math.random()*m.w.reduce((a,b)=>a+b,0);
+        for(let i=0;i<m.w.length;i++) {
+            r-=m.w[i];
+            if(r<0) return i;
+        }
+        return 0;
+    }
+
+    function controls(label) {
+        return '<div class="bb-ctl">' +
+            '<button class="bb-sm" id="bbMin">−</button>' +
+            '<span class="bb-bet" id="bbBet"></span>' +
+            '<button class="bb-sm" id="bbPlus">+</button>' +
+            '<button class="bb-go" id="bbGo">'+label+'</button>' +
+        '</div>';
+    }
+
+    function bind(fn) {
+        $("#bbMin").onclick = () => {
+            if(!busy && bi>0) { bi--; updateBal(); }
+        };
+
+        $("#bbPlus").onclick = () => {
+            if(!busy && bi<BETS.length-1) { bi++; updateBal(); }
+        };
+
+        $("#bbGo").onclick = fn;
+    }
+
+    function broke() {
+        if(bal<BETS[0]) {
+            setMsg("Монеты закончились — держи бонус 500 🪙","#ffd54a");
+            bal=500;
+            updateBal();
+        }
+    }
+
+    function show(id) {
+        if(busy) return;
+
+        cur=id;
+
+        tabs.querySelectorAll(".bb-tab").forEach(b => {
+            b.classList.toggle("on",b.dataset.id===id);
+        });
+
+        if(id==="wheel") return showWheel();
+
+        const m=MACHINES.find(x=>x.id===id);
+
+        const mult=m.reels===3
+            ? "3 одинаковых"
+            : "3 / 4 / 5 одинаковых (×1 / ×3 / ×10)";
+
+        stage.innerHTML =
+            '<div class="bb-stage" style="--c1:'+m.c1+';--c2:'+m.c2+'">' +
+            '<div class="bb-lights"></div>' +
+            '<h3 class="bb-name">'+m.icon+" "+m.name+" "+m.icon+'</h3>' +
+            '<div class="bb-reels">' +
+            m.sym.slice(0,1).concat(Array(m.reels-1).fill(m.sym[1]))
+                .map(s=>'<div class="bb-reel">'+s+'</div>').join("") +
+            '</div>' +
+            '<div class="bb-msg" id="bbMsg">Нажми КРУТИТЬ!</div>' +
+            controls("КРУТИТЬ") +
+            '<div class="bb-pay">' +
+            m.sym.map((s,i)=>"<span>"+s+" ×"+m.pay[i]+"</span>").join("") +
+            "<span>"+mult+(m.reels===3?"; пара ×1.5":"")+"</span>" +
+            '</div>' +
+            '<div class="bb-lights" style="margin:14px 0 0"></div>' +
+            '</div>';
+
+        bind(()=>spin(m));
+        updateBal();
+    }
+
+    function spin(m) {
+        if(busy) return;
+
+        const bet=BETS[bi];
+
+        if(bal<bet) {
+            setMsg("Не хватает монет — уменьши ставку","#ff9a9a");
+            return;
+        }
+
+        bal-=bet;
+        updateBal();
+        lock(true);
+        setMsg("Крутим...");
+
+        const res=Array.from({length:m.reels},()=>pick(m));
+        const els=[...stage.querySelectorAll(".bb-reel")];
+
+        els.forEach(r=>r.classList.remove("win"));
+
+        els.forEach((r,i)=>{
+            r.classList.add("spin");
+
+            const iv=setInterval(()=>{
+                r.textContent=m.sym[Math.floor(Math.random()*m.sym.length)];
+            },70);
+
+            setTimeout(()=>{
+                clearInterval(iv);
+                r.classList.remove("spin");
+                r.textContent=m.sym[res[i]];
+
+                if(i===els.length-1) finish(m,res,els,bet);
+            },900+i*400);
         });
     }
 
-    </script>
-<!-- БАННЕР КУКИ -->
-<div id="cookieBanner" style="
-    position: fixed; 
-    bottom: 20px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    width: min(500px, calc(100% - 40px)); 
-    background: var(--surface); 
-    border: 1px solid var(--border); 
-    border-radius: var(--radius); 
-    box-shadow: var(--shadow); 
-    padding: 20px; 
-    z-index: 9999; 
-    display: none; 
-    flex-direction: column; 
-    gap: 15px;
-">
-    <div style="font-size: 14px; line-height: 1.5;">
-        🍪 Мы используем файлы <strong>cookie</strong> и системы аналитики, чтобы собирать данные об устройствах, вашем IP-адресе и поведении на сайте. Это необходимо для корректной работы панели и показа релевантной рекламы. Узнайте больше в нашей <a href="#privacy" style="color: var(--primary);">Политике конфиденциальности</a>.
-    </div>
-    <button id="acceptCookies" class="primary-button" style="min-height: 38px; align-self: flex-end;">
-        Принять и продолжить
-    </button>
-</div>
+    function finish(m,res,els,bet) {
+        const cnt={};
+
+        res.forEach(x=>cnt[x]=(cnt[x]||0)+1);
+
+        let best=0,c=0;
+
+        for(const k in cnt) {
+            if(cnt[k]>c) {
+                c=cnt[k];
+                best=+k;
+            }
+        }
+
+        let win=0;
+
+        if(m.reels===3) {
+            if(c===3) win=bet*m.pay[best];
+            else if(c===2) win=Math.floor(bet*1.5);
+        } else if(c>=3) {
+            win=bet*m.pay[best]*[1,3,10][c-3];
+        }
+
+        if(win) {
+            bal+=win;
+
+            res.forEach((x,i)=>{
+                if(x===best) els[i].classList.add("win");
+            });
+
+            setMsg(
+                (c===m.reels?"ДЖЕКПОТ! +":"Выигрыш! +")+win+" 🪙",
+                "#ffd54a"
+            );
+
+            if(win>=bet*5) rain();
+        } else {
+            setMsg("Не повезло, попробуй ещё","#fff");
+        }
+
+        lock(false);
+        updateBal();
+        broke();
+    }
+
+    function showWheel() {
+        const cols=["#c4121f","#161616"];
+        const seg=360/WHEEL.length;
+
+        const grad=WHEEL.map((v,i)=>
+            (v>=2?"#d4a017":cols[i%2])+
+            " "+i*seg+"deg "+(i+1)*seg+"deg"
+        ).join(",");
+
+        const labels=WHEEL.map((v,i)=>
+            '<i style="transform:rotate('+
+            (i*seg+seg/2)+'deg) translateY(-102px)">'+
+            (v?"×"+v:"0")+"</i>"
+        ).join("");
+
+        stage.innerHTML =
+            '<div class="bb-stage" style="--c1:#0f5132;--c2:#04170f">' +
+            '<div class="bb-lights"></div>' +
+            '<h3 class="bb-name">🎡 Колесо фортуны 🎡</h3>' +
+            '<div class="bb-wheelbox">' +
+            '<div class="bb-ptr">🔻</div>' +
+            '<div class="bb-wheel" id="bbW" style="background:conic-gradient('+grad+');transform:rotate('+wrot+'deg)">'+
+            labels+'</div></div>' +
+            '<div class="bb-msg" id="bbMsg">Крути колесо!</div>' +
+            controls("КРУТИТЬ") +
+            '<div class="bb-lights" style="margin:14px 0 0"></div>' +
+            '</div>';
+
+        bind(spinWheel);
+        updateBal();
+    }
+
+    function spinWheel() {
+        if(busy) return;
+
+        const bet=BETS[bi];
+
+        if(bal<bet) {
+            setMsg("Не хватает монет — уменьши ставку","#ff9a9a");
+            return;
+        }
+
+        bal-=bet;
+        updateBal();
+        lock(true);
+        setMsg("Крутим...");
+
+        const t=Math.floor(Math.random()*WHEEL.length);
+        const seg=360/WHEEL.length;
+
+        wrot=Math.ceil(wrot/360)*360+360*5-(t*seg+seg/2);
+
+        $("#bbW").style.transform="rotate("+wrot+"deg)";
+
+        setTimeout(()=>{
+            const win=Math.floor(bet*WHEEL[t]);
+
+            if(win) {
+                bal+=win;
+                setMsg("×"+WHEEL[t]+"! +"+win+" 🪙","#ffd54a");
+                if(WHEEL[t]>=2) rain();
+            } else {
+                setMsg("Пусто! Попробуй ещё","#fff");
+            }
+
+            lock(false);
+            updateBal();
+            broke();
+        },4200);
+    }
+
+    show("fruit");
+})();
+</script>
 
 </body>
 </html>
