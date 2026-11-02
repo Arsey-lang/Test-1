@@ -1,966 +1,693 @@
-<!DOCTYPE html><html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f5f7fb">
-    <meta name="description" content="Моя личная страница с игровым казино БелБэт."><title>MySpace — личная страница</title>
-
-<!-- GOOGLE ANALYTICS -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CTKPMP4P56"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-CTKPMP4P56');
-</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#14040a">
+<title>БЕЛБЭТ — Casino</title>
 
 <style>
-    :root {
-        color-scheme: light;
-        --bg: #f5f7fb;
-        --surface: #ffffff;
-        --text: #172033;
-        --muted: #7b8498;
-        --border: #e8ecf4;
-        --primary: #6366f1;
-        --shadow: 0 8px 30px rgba(31,41,75,.045);
-        --radius: 20px;
-    }
+*{box-sizing:border-box}
 
-    body.dark {
-        color-scheme: dark;
-        --bg: #10131d;
-        --surface: #191e2b;
-        --text: #f1f5f9;
-        --muted: #9ba6bd;
-        --border: #2c3448;
-        --primary: #818cf8;
-        --shadow: 0 8px 30px rgba(0,0,0,.12);
-    }
+body{
+    margin:0;
+    background:#10131d;
+    color:white;
+    font-family:Arial,sans-serif;
+}
 
-    * { box-sizing: border-box; }
+.container{
+    width:min(1100px,94%);
+    margin:auto;
+}
 
-    body {
-        margin: 0;
-        min-height: 100vh;
-        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.6;
-        transition: background .25s, color .25s;
-    }
+header{
+    background:#191e2b;
+    border-bottom:1px solid #34394a;
+    padding:20px 0;
+}
 
-    .container {
-        width: min(1120px, calc(100% - 40px));
-        margin: auto;
-    }
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
 
-    .header {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-    }
+.logo{
+    font-size:25px;
+    font-weight:900;
+    color:#ffd54a;
+}
 
-    .header-inner {
-        min-height: 76px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-    }
+button{
+    cursor:pointer;
+    font-weight:bold;
+}
 
-    .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-size: 18px;
-        font-weight: 800;
-    }
+.balance{
+    background:#0c0206;
+    border:2px solid #ffd54a;
+    color:#ffd54a;
+    border-radius:30px;
+    padding:12px 20px;
+    font-size:19px;
+}
 
-    .brand-icon {
-        width: 42px;
-        height: 42px;
-        display: grid;
-        place-items: center;
-        border-radius: 14px;
-        color: white;
-        background: linear-gradient(135deg,#818cf8,#6366f1,#4f46e5);
-    }
+main{padding:30px 0}
 
-    .icon-button {
-        width: 42px;
-        height: 42px;
-        display: grid;
-        place-items: center;
-        border: 1px solid var(--border);
-        border-radius: 13px;
-        color: var(--text);
-        background: var(--surface);
-        cursor: pointer;
-        font-size: 18px;
-    }
+.title{
+    text-align:center;
+    color:#ffd54a;
+    font-size:30px;
+}
 
-    main {
-        padding-top: 42px;
-        padding-bottom: 50px;
-    }
+.subtitle{
+    text-align:center;
+    color:#aaa;
+    margin-bottom:25px;
+}
 
-    .welcome {
-        margin-bottom: 30px;
-    }
+.casino{
+    padding:22px;
+    border:2px solid #98751d;
+    border-radius:24px;
+    background:radial-gradient(#4a0d1a,#14040a 75%);
+    box-shadow:0 0 35px #ffd54a22;
+}
 
-    .eyebrow {
-        color: var(--primary);
-        font-size: 12px;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        margin-bottom: 12px;
-    }
+.machines{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    gap:10px;
+    margin-bottom:25px;
+}
 
-    h1 {
-        margin: 0 0 10px;
-        font-size: clamp(28px,4vw,38px);
-        line-height: 1.2;
-    }
+.machine{
+    padding:14px 7px;
+    border:1px solid #765313;
+    border-radius:13px;
+    background:#240a12;
+    color:#ffe6a0;
+    font-size:13px;
+    min-height:90px;
+}
 
-    .welcome p {
-        color: var(--muted);
-        font-size: 15px;
-    }
+.machine span{
+    display:block;
+    font-size:27px;
+    margin-bottom:6px;
+}
 
-    .section-card {
-        padding: 26px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-    }
+.machine.active{
+    background:linear-gradient(#ffd54a,#b8860b);
+    color:#260d00;
+}
 
-    .about {
-        margin-bottom: 30px;
-    }
+.stage{
+    padding:22px 12px;
+    border:3px solid #c9a227;
+    border-radius:20px;
+    background:linear-gradient(150deg,#5a060e,#14040a);
+    text-align:center;
+}
 
-    .about h2 {
-        margin-top: 0;
-    }
+.machine-name{
+    color:#ffe18a;
+    font-size:25px;
+    margin:5px 0 20px;
+}
 
-    .about p {
-        color: var(--muted);
-        font-size: 14px;
-    }
+.reels{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:20px auto;
+}
 
-    .tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
+.reel{
+    width:clamp(65px,15vw,105px);
+    height:clamp(80px,18vw,120px);
+    display:grid;
+    place-items:center;
+    background:linear-gradient(#ddd,#fff,#ddd);
+    border:3px solid #ffd54a;
+    border-radius:13px;
+    font-size:clamp(35px,8vw,65px);
+    color:#111;
+}
 
-    .tag {
-        padding: 7px 11px;
-        border-radius: 9px;
-        color: var(--primary);
-        background: rgba(99,102,241,.1);
-        font-size: 11px;
-        font-weight: 700;
-    }
+.reel.spin{
+    animation:shake .12s infinite;
+    filter:blur(2px);
+}
 
-    footer {
-        padding: 25px 0;
-        border-top: 1px solid var(--border);
-        color: var(--muted);
-        font-size: 12px;
-    }
+@keyframes shake{
+    50%{transform:translateY(5px)}
+}
 
-    .footer-inner {
-        display: flex;
-        justify-content: space-between;
-        gap: 15px;
-    }
+.reel.win{
+    box-shadow:0 0 25px 8px #ffd54a;
+    animation:pulse .5s infinite alternate;
+}
 
-    @media(max-width:600px) {
-        .container { width: calc(100% - 28px); }
-        main { padding-top: 28px; }
-        .section-card { padding: 19px; }
-        .footer-inner {
-            flex-direction: column;
-        }
-    }
+@keyframes pulse{
+    to{transform:scale(1.08)}
+}
+
+.message{
+    min-height:35px;
+    font-size:20px;
+    font-weight:bold;
+    color:#ffd54a;
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin:15px;
+}
+
+.play{
+    padding:16px 40px;
+    border:0;
+    border-radius:40px;
+    background:linear-gradient(#ff5555,#b90018);
+    color:white;
+    font-size:20px;
+    box-shadow:0 5px #69000b;
+}
+
+.play:active{transform:translateY(4px)}
+
+.play:disabled{opacity:.5}
+
+.info{
+    margin-top:20px;
+    padding:15px;
+    background:#14040a;
+    border-radius:12px;
+    color:#e9d6a0;
+    font-size:13px;
+    line-height:1.8;
+}
+
+.history{
+    margin-top:25px;
+    padding:18px;
+    background:#191e2b;
+    border:1px solid #34394a;
+    border-radius:16px;
+}
+
+.history h3{color:#ffd54a}
+
+.history-item{
+    padding:9px 0;
+    border-bottom:1px solid #34394a;
+    color:#ddd;
+    font-size:13px;
+}
+
+.reset{
+    background:#34394a;
+    color:white;
+    padding:10px 18px;
+    border:0;
+    border-radius:10px;
+}
+
+footer{
+    text-align:center;
+    color:#777;
+    padding:30px;
+    font-size:12px;
+}
+
+@media(max-width:500px){
+    .casino{padding:12px}
+    .machines{grid-template-columns:repeat(3,1fr)}
+    .machine{font-size:11px}
+}
 </style>
+</head>
 
-<!-- СТИЛИ КАЗИНО -->
-<style>
-    .bb {
-        --gold:#ffd54a;
-        margin:44px 0 10px;
-        padding:clamp(16px,3vw,30px);
-        border-radius:26px;
-        color:#fff;
-        position:relative;
-        overflow:hidden;
-        background:radial-gradient(ellipse at top,#4a0d1a,#14040a 70%);
-        border:2px solid #8a6a16;
-        box-shadow:0 0 0 5px #1a0a0e,0 0 45px rgba(255,200,60,.2),inset 0 0 70px rgba(0,0,0,.65)
-    }
+<body>
 
-    .bb * { box-sizing:border-box }
-
-    .bb-top {
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        gap:14px;
-        flex-wrap:wrap;
-        margin-bottom:16px
-    }
-
-    .bb-logo {
-        font-size:clamp(26px,5vw,40px);
-        font-weight:900;
-        letter-spacing:2px;
-        margin:0;
-        background:linear-gradient(#fff3b0,#ffd54a 50%,#b8860b);
-        -webkit-background-clip:text;
-        background-clip:text;
-        color:transparent;
-        filter:drop-shadow(0 0 10px rgba(255,200,60,.45))
-    }
-
-    .bb-logo small {
-        display:block;
-        font-size:11px;
-        letter-spacing:3px;
-        color:#e9c46a;
-        -webkit-text-fill-color:#e9c46a;
-        font-weight:600
-    }
-
-    .bb-bal {
-        display:flex;
-        align-items:center;
-        gap:10px;
-        padding:10px 18px;
-        border-radius:40px;
-        background:#0c0206;
-        border:2px solid var(--gold);
-        box-shadow:0 0 18px rgba(255,200,60,.3);
-        font-size:20px;
-        font-weight:800;
-        color:var(--gold)
-    }
-
-    .bb-tabs {
-        display:flex;
-        gap:10px;
-        flex-wrap:wrap;
-        margin-bottom:18px
-    }
-
-    .bb-tab {
-        flex:1;
-        min-width:120px;
-        padding:12px 10px;
-        border-radius:14px;
-        border:1px solid #6b4a10;
-        background:#240a12;
-        color:#f3e2b3;
-        font-weight:700;
-        font-size:13px;
-        cursor:pointer;
-        transition:.2s
-    }
-
-    .bb-tab span {
-        display:block;
-        font-size:24px
-    }
-
-    .bb-tab:hover { transform:translateY(-2px) }
-
-    .bb-tab.on {
-        background:linear-gradient(#ffd54a,#c9921a);
-        color:#2a1100;
-        box-shadow:0 0 20px rgba(255,200,60,.5)
-    }
-
-    .bb-stage {
-        border-radius:22px;
-        padding:18px;
-        text-align:center;
-        border:3px solid #c9a227;
-        background:linear-gradient(160deg,var(--c1),var(--c2));
-        box-shadow:inset 0 0 40px rgba(0,0,0,.55),0 10px 30px rgba(0,0,0,.5)
-    }
-
-    .bb-lights {
-        height:12px;
-        margin-bottom:12px;
-        background:radial-gradient(circle,#fff6c4 3px,#ffb800 4px,transparent 5px) 0 0/24px 12px;
-        animation:bbl 1s steps(2) infinite
-    }
-
-    @keyframes bbl { 50% { opacity:.35 } }
-
-    .bb-name {
-        margin:0 0 14px;
-        font-size:clamp(18px,3.5vw,26px);
-        color:#fff3b0;
-        text-shadow:0 0 14px rgba(255,220,100,.7)
-    }
-
-    .bb-reels {
-        display:flex;
-        justify-content:center;
-        gap:clamp(5px,1.5vw,12px);
-        padding:12px;
-        border-radius:16px;
-        background:#0a0305;
-        border:3px solid #ffd54a;
-        box-shadow:inset 0 0 20px #000;
-        width:fit-content;
-        max-width:100%;
-        margin:0 auto 14px
-    }
-
-    .bb-reel {
-        width:clamp(50px,13vw,96px);
-        height:clamp(64px,16vw,116px);
-        display:grid;
-        place-items:center;
-        font-size:clamp(30px,8vw,62px);
-        border-radius:10px;
-        background:linear-gradient(#cfcfcf,#fff 30%,#fff 70%,#cfcfcf)
-    }
-
-    .bb-reel.spin {
-        filter:blur(1.5px);
-        transform:scaleY(.96)
-    }
-
-    .bb-reel.win {
-        animation:bbw .5s ease 4;
-        box-shadow:0 0 22px 6px #ffd54a
-    }
-
-    @keyframes bbw { 50% { transform:scale(1.1) } }
-
-    .bb-msg {
-        min-height:30px;
-        font-size:18px;
-        font-weight:800;
-        margin-bottom:10px
-    }
-
-    .bb-ctl {
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        gap:10px;
-        flex-wrap:wrap
-    }
-
-    .bb-sm {
-        width:42px;
-        height:42px;
-        border-radius:50%;
-        border:2px solid var(--gold);
-        background:#1a0a0e;
-        color:var(--gold);
-        font-size:22px;
-        font-weight:900;
-        cursor:pointer
-    }
-
-    .bb-bet {
-        min-width:110px;
-        font-weight:800;
-        font-size:16px;
-        color:var(--gold)
-    }
-
-    .bb-go {
-        padding:14px 34px;
-        border:none;
-        border-radius:40px;
-        font-size:19px;
-        font-weight:900;
-        letter-spacing:1px;
-        color:#fff;
-        cursor:pointer;
-        background:linear-gradient(#ff5a5a,#c4121f);
-        box-shadow:0 5px 0 #7a0a14,0 0 22px rgba(255,60,60,.5);
-        transition:.1s
-    }
-
-    .bb-go:active {
-        transform:translateY(4px);
-        box-shadow:0 1px 0 #7a0a14
-    }
-
-    .bb-go:disabled,.bb-tab:disabled {
-        opacity:.5;
-        cursor:not-allowed
-    }
-
-    .bb-pay {
-        display:flex;
-        flex-wrap:wrap;
-        justify-content:center;
-        gap:6px 14px;
-        margin-top:16px;
-        font-size:12px;
-        color:#f3e2b3
-    }
-
-    .bb-wheelbox {
-        position:relative;
-        width:min(270px,80vw);
-        height:min(270px,80vw);
-        margin:0 auto 14px
-    }
-
-    .bb-wheel {
-        position:absolute;
-        inset:0;
-        border-radius:50%;
-        border:6px solid var(--gold);
-        box-shadow:0 0 25px rgba(255,200,60,.5),inset 0 0 20px #000;
-        transition:transform 4s cubic-bezier(.15,.7,.1,1)
-    }
-
-    .bb-wheel i {
-        position:absolute;
-        left:50%;
-        top:50%;
-        width:44px;
-        height:22px;
-        margin:-11px 0 0 -22px;
-        text-align:center;
-        font-style:normal;
-        font-weight:900;
-        font-size:15px;
-        line-height:22px;
-        color:#fff;
-        text-shadow:0 1px 3px #000
-    }
-
-    .bb-ptr {
-        position:absolute;
-        left:50%;
-        top:-12px;
-        transform:translateX(-50%);
-        font-size:30px;
-        z-index:2;
-        filter:drop-shadow(0 2px 3px #000)
-    }
-
-    .bb-note {
-        margin:16px 0 0;
-        font-size:11px;
-        color:#b9a77a;
-        text-align:center
-    }
-
-    .bb-coin {
-        position:absolute;
-        top:-30px;
-        font-size:26px;
-        pointer-events:none;
-        animation:bbc 1.8s linear forwards
-    }
-
-    @keyframes bbc {
-        to {
-            transform:translateY(520px) rotate(540deg);
-            opacity:.2
-        }
-    }
-</style>
-
-</head><body><!-- ШАПКА -->
-<header class="header">
-    <div class="container header-inner">
-        <div class="brand">
-            <div class="brand-icon">✦</div>
-            <span>MySpace</span>
-        </div>
-
-        <button
-            class="icon-button"
-            id="themeToggle"
-            type="button"
-            aria-label="Переключить тему"
-        >🌙</button>
-    </div>
+<header>
+<div class="container header">
+    <div class="logo">✦ БЕЛБЭТ CASINO</div>
+    <div class="balance">🪙 <span id="balance">1000</span></div>
+</div>
 </header>
 
-<!-- ОСНОВНОЙ КОНТЕНТ -->
 <main class="container">
 
-    <section class="welcome">
-        <div class="eyebrow">● Личная панель</div>
-        <h1>Добро пожаловать! 👋</h1>
-        <p>Это моя личная страница. Здесь собрана основная информация и игровая зона.</p>
-    </section>
+<h1 class="title">🎰 ИГРОВАЯ ЗОНА</h1>
+<p class="subtitle">15 тематических игровых автоматов</p>
 
-    <!-- ОБО МНЕ -->
-    <section class="section-card about">
-        <h2>Обо мне ✨</h2>
-        <p>
-            Привет! Это моя личная страница, созданная
-            с помощью HTML, CSS и JavaScript.
-            Я развиваю свой проект и изучаю новые технологии.
-        </p>
+<div class="casino">
 
-        <div class="tags">
-            <span class="tag">HTML</span>
-            <span class="tag">CSS</span>
-            <span class="tag">JavaScript</span>
-        </div>
-    </section>
+<div class="machines" id="machines"></div>
 
-    <!-- КАЗИНО БЕЛБЭТ -->
-    <section class="bb" id="belbetCasino" aria-label="БелБэт казино"></section>
+<div class="stage">
+
+<h2 class="machine-name" id="machineName"></h2>
+
+<div class="reels" id="reels"></div>
+
+<div class="message" id="message">
+Выбери автомат!
+</div>
+
+<div class="controls">
+<button class="play" id="play">ИГРАТЬ</button>
+</div>
+
+<div class="info" id="info"></div>
+
+</div>
+</div>
+
+<div class="history">
+<h3>📜 Последние результаты</h3>
+<div id="history">Пока нет результатов</div>
+<br>
+<button class="reset" id="reset">Сбросить прогресс</button>
+</div>
 
 </main>
 
-<!-- ПОДВАЛ -->
 <footer>
-    <div class="container footer-inner">
-        <span>© <span id="currentYear"></span> MySpace. Сделано с ❤️</span>
-        <span>HTML · CSS · JavaScript</span>
-    </div>
+© 2026 БЕЛБЭТ · Виртуальная игровая зона
 </footer>
 
-<!-- COOKIE БАННЕР -->
-<div id="cookieBanner" style="
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    width:min(500px,calc(100% - 40px));
-    background:var(--surface);
-    color:var(--text);
-    border:1px solid var(--border);
-    border-radius:20px;
-    box-shadow:var(--shadow);
-    padding:20px;
-    z-index:9999;
-    display:none;
-    flex-direction:column;
-    gap:15px;
-">
-    <div style="font-size:14px;line-height:1.5">
-        🍪 Сайт использует файлы cookie и Google Analytics
-        для анализа посещаемости.
-        Подробнее — в политике конфиденциальности.
-    </div>
-
-    <button
-        id="acceptCookies"
-        style="
-            align-self:flex-end;
-            padding:10px 18px;
-            border:0;
-            border-radius:10px;
-            background:#6366f1;
-            color:white;
-            font-weight:700;
-            cursor:pointer;
-        "
-    >Принять</button>
-</div>
-
-<!-- JAVASCRIPT -->
 <script>
-    "use strict";
+"use strict";
 
-    // ТЕМА
-    const themeToggle = document.getElementById("themeToggle");
+// Все автоматы
 
-    let theme = "light";
+const games = [
 
-    try {
-        theme = localStorage.getItem("mySpaceTheme") || "light";
-    } catch(e) {}
+{
+name:"Фруктовая классика",
+icon:"🍒",
+symbols:["🍒","🍋","🍊","🍇","🔔","⭐","7️⃣"],
+weights:[30,25,20,12,7,4,2],
+reels:3
+},
 
-    function applyTheme() {
-        document.body.classList.toggle("dark", theme === "dark");
-        themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+{
+name:"Золото фараонов",
+icon:"👑",
+symbols:["🪲","🐍","👁️","🏺","🔱","👑"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
 
-        document.querySelector('meta[name="theme-color"]')
-            .setAttribute("content", theme === "dark" ? "#10131d" : "#f5f7fb");
-    }
+{
+name:"Космический джекпот",
+icon:"🚀",
+symbols:["☄️","🪐","🌟","👽","🚀","💎"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
 
-    applyTheme();
+{
+name:"Алмазная лихорадка",
+icon:"💎",
+symbols:["💠","🔷","🔹","💎","👑","💍"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
 
-    themeToggle.addEventListener("click", () => {
-        theme = theme === "dark" ? "light" : "dark";
-        applyTheme();
+{
+name:"Пиратские сокровища",
+icon:"🏴‍☠️",
+symbols:["⚓","🦜","🗺️","💰","🏴‍☠️","💎"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
 
-        try {
-            localStorage.setItem("mySpaceTheme", theme);
-        } catch(e) {}
+{
+name:"Драконье золото",
+icon:"🐉",
+symbols:["🔥","🥚","🐲","🛡️","👑","🐉"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
+
+{
+name:"Лесная магия",
+icon:"🌲",
+symbols:["🍄","🦊","🦉","🌳","🧚","🌟"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
+
+{
+name:"Вампирская ночь",
+icon:"🧛",
+symbols:["🦇","🌙","🕯️","🧛","🩸","💎"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
+
+{
+name:"Удачливая панда",
+icon:"🐼",
+symbols:["🎋","🐼","🥟","🎍","⭐","👑"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
+
+{
+name:"Огненная гора",
+icon:"🌋",
+symbols:["🔥","🌋","🪨","☄️","💥","💎"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
+
+{
+name:"Золотой дворец",
+icon:"🏛️",
+symbols:["🏛️","🏺","🪙","👑","💍","💎"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
+
+{
+name:"Подводный мир",
+icon:"🌊",
+symbols:["🐠","🐙","🦈","🐬","🧜","💎"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
+
+{
+name:"Электрический шторм",
+icon:"⚡",
+symbols:["⚡","🔋","🌩️","💡","🔥","💎"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
+
+{
+name:"Дикий запад",
+icon:"🤠",
+symbols:["🤠","🐎","⭐","🔫","💰","👑"],
+weights:[30,26,20,14,7,3],
+reels:5
+},
+
+{
+name:"Королевский джекпот",
+icon:"👑",
+symbols:["♠️","♥️","♦️","♣️","💍","👑"],
+weights:[30,26,20,14,7,3],
+reels:5
+}
+
+];
+
+// Настройки игровых наград.
+// Это игровые очки, а не реальные казино-выплаты.
+
+const rewards = {
+3:10,
+4:30,
+5:100
+};
+
+let balance = 1000;
+let current = 0;
+let busy = false;
+let history = [];
+
+try{
+    balance = Number(localStorage.getItem("bb_balance")) || 1000;
+    history = JSON.parse(localStorage.getItem("bb_history") || "[]");
+}catch(e){}
+
+const $ = id => document.getElementById(id);
+
+function save(){
+    try{
+        localStorage.setItem("bb_balance",balance);
+        localStorage.setItem("bb_history",JSON.stringify(history));
+    }catch(e){}
+}
+
+function updateBalance(){
+    $("balance").textContent=balance.toLocaleString("ru-RU");
+    save();
+}
+
+// Создание кнопок автоматов
+
+games.forEach((g,i)=>{
+
+    const b=document.createElement("button");
+
+    b.className="machine";
+    b.innerHTML=`<span>${g.icon}</span>${g.name}`;
+
+    b.onclick=()=>selectGame(i);
+
+    $("machines").appendChild(b);
+
+});
+
+function selectGame(i){
+
+    if(busy)return;
+
+    current=i;
+
+    document.querySelectorAll(".machine").forEach((b,n)=>{
+        b.classList.toggle("active",n===i);
     });
 
-    document.getElementById("currentYear").textContent =
-        new Date().getFullYear();
+    const g=games[i];
 
-    // COOKIE
-    const banner = document.getElementById("cookieBanner");
-    const acceptBtn = document.getElementById("acceptCookies");
+    $("machineName").textContent=g.icon+" "+g.name+" "+g.icon;
 
-    try {
-        if (!localStorage.getItem("cookie_consent_accepted")) {
-            setTimeout(() => {
-                banner.style.display = "flex";
-            }, 1000);
-        }
+    $("reels").innerHTML=Array.from(
+        {length:g.reels},
+        ()=>'<div class="reel">❔</div>'
+    ).join("");
 
-        acceptBtn.addEventListener("click", () => {
-            localStorage.setItem("cookie_consent_accepted", "true");
-            banner.style.display = "none";
-        });
-    } catch(e) {
-        banner.style.display = "none";
+    $("message").textContent="Готов к игре!";
+
+    $("info").innerHTML=`
+        <b>Автомат:</b> ${g.name}<br>
+        <b>Барабаны:</b> ${g.reels}<br>
+        <b>Символов:</b> ${g.symbols.length}<br>
+        <b>Режим:</b> виртуальные игровые очки
+    `;
+}
+
+// Случайный выбор символа с заданными весами
+
+function pick(g){
+
+    let total=g.weights.reduce((a,b)=>a+b,0);
+
+    let r=Math.random()*total;
+
+    for(let i=0;i<g.weights.length;i++){
+
+        r-=g.weights[i];
+
+        if(r<0)return g.symbols[i];
+
     }
-</script>
 
-<!-- ===== ЛОГИКА КАЗИНО БЕЛБЭТ ===== -->
-<script>
-(function () {
-    const root = document.getElementById("belbetCasino");
-    if (!root) return;
+    return g.symbols[0];
+}
 
-    const KEY = "belbetBalance2";
-    const BETS = [10, 20, 50, 100, 250, 500];
+// Игровой раунд
 
-    let bal = 1000, bi = 0, busy = false, cur = "fruit", wrot = 0;
+function play(){
 
-    try {
-        const s = parseInt(localStorage.getItem(KEY), 10);
-        if (s >= 0) bal = s;
-    } catch(e) {}
+    if(busy)return;
 
-    const save = () => {
-        try { localStorage.setItem(KEY, bal); } catch(e) {}
-    };
+    busy=true;
 
-    const MACHINES = [
-        {
-            id:"fruit", name:"Фруктовая классика", icon:"🍒",
-            reels:3, c1:"#c4121f", c2:"#5a060e",
-            sym:["🍒","🍋","🍊","🍇","🔔","⭐","7️⃣"],
-            w:[30,25,20,12,7,4,2],
-            pay:[5,8,12,20,40,80,200]
-        },
-        {
-            id:"egypt", name:"Золото фараонов", icon:"👑",
-            reels:5, c1:"#b8860b", c2:"#3d2703",
-            sym:["🪲","🐍","👁️","🏺","🔱","👑"],
-            w:[30,26,20,14,7,3],
-            pay:[3,4,6,12,30,80]
-        },
-        {
-            id:"space", name:"Космический джекпот", icon:"🚀",
-            reels:5, c1:"#6d28d9", c2:"#140f3d",
-            sym:["☄️","🪐","🌟","👽","🚀","💎"],
-            w:[30,26,20,14,7,3],
-            pay:[3,4,6,12,30,80]
-        }
-    ];
+    $("play").disabled=true;
 
-    const WHEEL = [0,0.5,0,1,0,0.5,0,2,0,5];
+    const g=games[current];
 
-    root.innerHTML =
-        '<div class="bb-top">' +
-            '<h2 class="bb-logo">БЕЛБЭТ <small>CASINO • ИГРОВЫЕ АВТОМАТЫ</small></h2>' +
-            '<div class="bb-bal">🪙 <span id="bbBal"></span></div>' +
-        '</div>' +
-        '<div class="bb-tabs" id="bbTabs"></div>' +
-        '<div id="bbStage"></div>' +
-        '<p class="bb-note">Игра только для развлечения: виртуальные монеты, реальные деньги не используются. 18+</p>';
+    const reels=[...document.querySelectorAll(".reel")];
 
-    const $ = s => root.querySelector(s);
-    const tabs = $("#bbTabs");
-    const stage = $("#bbStage");
+    $("message").textContent="✨ Играем...";
 
-    MACHINES.concat([
-        {id:"wheel",name:"Колесо фортуны",icon:"🎡"}
-    ]).forEach(m => {
-        const b = document.createElement("button");
-        b.className = "bb-tab";
-        b.dataset.id = m.id;
-        b.innerHTML = "<span>" + m.icon + "</span>" + m.name;
-        b.onclick = () => show(m.id);
-        tabs.appendChild(b);
+    reels.forEach(r=>{
+        r.classList.remove("win");
+        r.classList.add("spin");
     });
 
-    function updateBal() {
-        $("#bbBal").textContent = bal.toLocaleString("ru-RU");
-        const bl = $("#bbBet");
-        if (bl) bl.textContent = "Ставка: " + BETS[bi];
-        save();
-    }
+    const result=Array.from(
+        {length:g.reels},
+        ()=>pick(g)
+    );
 
-    function setMsg(t,c) {
-        const m = $("#bbMsg");
-        if (!m) return;
-        m.textContent = t;
-        m.style.color = c || "#fff";
-    }
+    // Анимация
 
-    function lock(v) {
-        busy = v;
-        root.querySelectorAll(".bb-tab,.bb-go,.bb-sm")
-            .forEach(b => b.disabled = v);
-    }
+    reels.forEach((r,i)=>{
 
-    function rain() {
-        for (let i=0;i<16;i++) {
-            const c = document.createElement("span");
-            c.className = "bb-coin";
-            c.textContent = "🪙";
-            c.style.left = Math.random()*95 + "%";
-            c.style.animationDelay = Math.random()*0.6 + "s";
-            root.appendChild(c);
-            setTimeout(() => c.remove(),2600);
-        }
-    }
+        let count=0;
 
-    function pick(m) {
-        let r = Math.random()*m.w.reduce((a,b)=>a+b,0);
-        for(let i=0;i<m.w.length;i++) {
-            r-=m.w[i];
-            if(r<0) return i;
-        }
-        return 0;
-    }
+        const interval=setInterval(()=>{
 
-    function controls(label) {
-        return '<div class="bb-ctl">' +
-            '<button class="bb-sm" id="bbMin">−</button>' +
-            '<span class="bb-bet" id="bbBet"></span>' +
-            '<button class="bb-sm" id="bbPlus">+</button>' +
-            '<button class="bb-go" id="bbGo">'+label+'</button>' +
-        '</div>';
-    }
+            r.textContent=pick(g);
 
-    function bind(fn) {
-        $("#bbMin").onclick = () => {
-            if(!busy && bi>0) { bi--; updateBal(); }
-        };
+        },75);
 
-        $("#bbPlus").onclick = () => {
-            if(!busy && bi<BETS.length-1) { bi++; updateBal(); }
-        };
-
-        $("#bbGo").onclick = fn;
-    }
-
-    function broke() {
-        if(bal<BETS[0]) {
-            setMsg("Монеты закончились — держи бонус 500 🪙","#ffd54a");
-            bal=500;
-            updateBal();
-        }
-    }
-
-    function show(id) {
-        if(busy) return;
-
-        cur=id;
-
-        tabs.querySelectorAll(".bb-tab").forEach(b => {
-            b.classList.toggle("on",b.dataset.id===id);
-        });
-
-        if(id==="wheel") return showWheel();
-
-        const m=MACHINES.find(x=>x.id===id);
-
-        const mult=m.reels===3
-            ? "3 одинаковых"
-            : "3 / 4 / 5 одинаковых (×1 / ×3 / ×10)";
-
-        stage.innerHTML =
-            '<div class="bb-stage" style="--c1:'+m.c1+';--c2:'+m.c2+'">' +
-            '<div class="bb-lights"></div>' +
-            '<h3 class="bb-name">'+m.icon+" "+m.name+" "+m.icon+'</h3>' +
-            '<div class="bb-reels">' +
-            m.sym.slice(0,1).concat(Array(m.reels-1).fill(m.sym[1]))
-                .map(s=>'<div class="bb-reel">'+s+'</div>').join("") +
-            '</div>' +
-            '<div class="bb-msg" id="bbMsg">Нажми КРУТИТЬ!</div>' +
-            controls("КРУТИТЬ") +
-            '<div class="bb-pay">' +
-            m.sym.map((s,i)=>"<span>"+s+" ×"+m.pay[i]+"</span>").join("") +
-            "<span>"+mult+(m.reels===3?"; пара ×1.5":"")+"</span>" +
-            '</div>' +
-            '<div class="bb-lights" style="margin:14px 0 0"></div>' +
-            '</div>';
-
-        bind(()=>spin(m));
-        updateBal();
-    }
-
-    function spin(m) {
-        if(busy) return;
-
-        const bet=BETS[bi];
-
-        if(bal<bet) {
-            setMsg("Не хватает монет — уменьши ставку","#ff9a9a");
-            return;
-        }
-
-        bal-=bet;
-        updateBal();
-        lock(true);
-        setMsg("Крутим...");
-
-        const res=Array.from({length:m.reels},()=>pick(m));
-        const els=[...stage.querySelectorAll(".bb-reel")];
-
-        els.forEach(r=>r.classList.remove("win"));
-
-        els.forEach((r,i)=>{
-            r.classList.add("spin");
-
-            const iv=setInterval(()=>{
-                r.textContent=m.sym[Math.floor(Math.random()*m.sym.length)];
-            },70);
-
-            setTimeout(()=>{
-                clearInterval(iv);
-                r.classList.remove("spin");
-                r.textContent=m.sym[res[i]];
-
-                if(i===els.length-1) finish(m,res,els,bet);
-            },900+i*400);
-        });
-    }
-
-    function finish(m,res,els,bet) {
-        const cnt={};
-
-        res.forEach(x=>cnt[x]=(cnt[x]||0)+1);
-
-        let best=0,c=0;
-
-        for(const k in cnt) {
-            if(cnt[k]>c) {
-                c=cnt[k];
-                best=+k;
-            }
-        }
-
-        let win=0;
-
-        if(m.reels===3) {
-            if(c===3) win=bet*m.pay[best];
-            else if(c===2) win=Math.floor(bet*1.5);
-        } else if(c>=3) {
-            win=bet*m.pay[best]*[1,3,10][c-3];
-        }
-
-        if(win) {
-            bal+=win;
-
-            res.forEach((x,i)=>{
-                if(x===best) els[i].classList.add("win");
-            });
-
-            setMsg(
-                (c===m.reels?"ДЖЕКПОТ! +":"Выигрыш! +")+win+" 🪙",
-                "#ffd54a"
-            );
-
-            if(win>=bet*5) rain();
-        } else {
-            setMsg("Не повезло, попробуй ещё","#fff");
-        }
-
-        lock(false);
-        updateBal();
-        broke();
-    }
-
-    function showWheel() {
-        const cols=["#c4121f","#161616"];
-        const seg=360/WHEEL.length;
-
-        const grad=WHEEL.map((v,i)=>
-            (v>=2?"#d4a017":cols[i%2])+
-            " "+i*seg+"deg "+(i+1)*seg+"deg"
-        ).join(",");
-
-        const labels=WHEEL.map((v,i)=>
-            '<i style="transform:rotate('+
-            (i*seg+seg/2)+'deg) translateY(-102px)">'+
-            (v?"×"+v:"0")+"</i>"
-        ).join("");
-
-        stage.innerHTML =
-            '<div class="bb-stage" style="--c1:#0f5132;--c2:#04170f">' +
-            '<div class="bb-lights"></div>' +
-            '<h3 class="bb-name">🎡 Колесо фортуны 🎡</h3>' +
-            '<div class="bb-wheelbox">' +
-            '<div class="bb-ptr">🔻</div>' +
-            '<div class="bb-wheel" id="bbW" style="background:conic-gradient('+grad+');transform:rotate('+wrot+'deg)">'+
-            labels+'</div></div>' +
-            '<div class="bb-msg" id="bbMsg">Крути колесо!</div>' +
-            controls("КРУТИТЬ") +
-            '<div class="bb-lights" style="margin:14px 0 0"></div>' +
-            '</div>';
-
-        bind(spinWheel);
-        updateBal();
-    }
-
-    function spinWheel() {
-        if(busy) return;
-
-        const bet=BETS[bi];
-
-        if(bal<bet) {
-            setMsg("Не хватает монет — уменьши ставку","#ff9a9a");
-            return;
-        }
-
-        bal-=bet;
-        updateBal();
-        lock(true);
-        setMsg("Крутим...");
-
-        const t=Math.floor(Math.random()*WHEEL.length);
-        const seg=360/WHEEL.length;
-
-        wrot=Math.ceil(wrot/360)*360+360*5-(t*seg+seg/2);
-
-        $("#bbW").style.transform="rotate("+wrot+"deg)";
+        const duration=1000+i*450;
 
         setTimeout(()=>{
-            const win=Math.floor(bet*WHEEL[t]);
 
-            if(win) {
-                bal+=win;
-                setMsg("×"+WHEEL[t]+"! +"+win+" 🪙","#ffd54a");
-                if(WHEEL[t]>=2) rain();
-            } else {
-                setMsg("Пусто! Попробуй ещё","#fff");
+            clearInterval(interval);
+
+            r.classList.remove("spin");
+
+            r.textContent=result[i];
+
+            count++;
+
+            if(i===reels.length-1){
+
+                setTimeout(()=>finish(result,reels),200);
+
             }
 
-            lock(false);
-            updateBal();
-            broke();
-        },4200);
+        },duration);
+
+    });
+
+}
+
+function finish(result,reels){
+
+    const counts={};
+
+    result.forEach(s=>{
+        counts[s]=(counts[s]||0)+1;
+    });
+
+    const best=Math.max(...Object.values(counts));
+
+    const g=games[current];
+
+    let points=0;
+
+    if(best>=3){
+        points=rewards[best]||0;
     }
 
-    show("fruit");
-})();
+    if(points>0){
+
+        balance+=points;
+
+        result.forEach((s,i)=>{
+
+            if(counts[s]===best){
+                reels[i].classList.add("win");
+            }
+
+        });
+
+        $("message").textContent=
+            "🎉 КОМБИНАЦИЯ! +"+points+" 🪙";
+
+    }else{
+
+        $("message").textContent=
+            "✨ Попробуй другую комбинацию!";
+
+    }
+
+    updateBalance();
+
+    addHistory(g.name,result,points);
+
+    busy=false;
+
+    $("play").disabled=false;
+
+}
+
+function addHistory(name,result,points){
+
+    history.unshift({
+        name,
+        result:result.join(" "),
+        points,
+        time:new Date().toLocaleTimeString("ru-RU")
+    });
+
+    history=history.slice(0,20);
+
+    renderHistory();
+
+    save();
+
+}
+
+function renderHistory(){
+
+    if(!history.length){
+        $("history").textContent="Пока нет результатов";
+        return;
+    }
+
+    $("history").innerHTML=history.map(h=>`
+
+        <div class="history-item">
+
+            ${h.time} · ${h.name}<br>
+
+            ${h.result}
+
+            <b style="color:#ffd54a">
+                ${h.points>0?" +"+h.points+" 🪙":" "}
+            </b>
+
+        </div>
+
+    `).join("");
+
+}
+
+// Кнопки
+
+$("play").onclick=play;
+
+$("reset").onclick=()=>{
+
+    if(busy)return;
+
+    if(!confirm("Сбросить игровой прогресс?"))return;
+
+    balance=1000;
+
+    history=[];
+
+    updateBalance();
+
+    renderHistory();
+
+};
+
+selectGame(0);
+
+updateBalance();
+
+renderHistory();
+
 </script>
 
 </body>
