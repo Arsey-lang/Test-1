@@ -22,7 +22,7 @@ body{margin:0;background:#10131d;color:#fff;font-family:Arial,sans-serif}
 header{background:#191e2b;border-bottom:1px solid #34394a;padding:16px 0}
 .header{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .logo{font-size:22px;font-weight:900;color:#ffd54a}
-.right{display:flex;gap:8px;align-items:center}
+.right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 button{cursor:pointer;font-weight:bold;font-family:inherit}
 .balance{background:#0c0206;border:2px solid #ffd54a;color:#ffd54a;border-radius:30px;padding:10px 18px;font-size:18px}
 .balance.bad{animation:shake .12s 4}
@@ -48,8 +48,8 @@ main{padding:26px 0}
 .message{min-height:34px;font-size:19px;font-weight:bold;color:#ffd54a;margin:8px 0}
 .controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:12px}
 .bets{display:flex;gap:6px;align-items:center;color:#e9d6a0;font-size:14px}
-.bet{background:#240a12;border:1px solid #765313;color:#ffe6a0;border-radius:20px;padding:8px 14px}
-.bet.active{background:#ffd54a;color:#260d00}
+.bet,.dbt{background:#240a12;border:1px solid #765313;color:#ffe6a0;border-radius:20px;padding:8px 14px}
+.bet.active,.dbt.active{background:#ffd54a;color:#260d00}
 .play{padding:15px 38px;border:0;border-radius:40px;background:linear-gradient(#ff5555,#b90018);color:#fff;font-size:20px;box-shadow:0 5px #69000b}
 .play:active{transform:translateY(4px)}
 .play:disabled,.bet:disabled,.wheelbtn:disabled{opacity:.5}
@@ -71,6 +71,19 @@ footer{text-align:center;color:#777;padding:30px;font-size:12px}
 #wc{width:100%;display:block;border-radius:50%;box-shadow:0 0 25px #ffd54a55;transition:transform 4s cubic-bezier(.17,.67,.12,1)}
 .pointer{position:absolute;left:50%;top:-12px;transform:translateX(-50%);font-size:30px;color:#ffd54a;z-index:2;text-shadow:0 2px 4px #000}
 @media(max-width:500px){.casino{padding:10px}.machines{grid-template-columns:repeat(3,1fr)}.machine{font-size:11px}.logo{font-size:17px}}
+[hidden]{display:none!important}
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+.tab{background:#240a12;border:1px solid #765313;color:#ffe6a0;border-radius:24px;padding:11px 18px;font-size:15px}
+.tab.active{background:#ffd54a;color:#260d00}
+#bets,#dbets{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.box input{width:100%;padding:12px;margin:5px 0;border-radius:10px;border:1px solid #765313;background:#0c0206;color:#fff;font-size:16px}
+.small{font-size:12px;color:#aaa}
+.top-i{display:flex;justify-content:space-between;gap:10px;padding:12px 6px;border-bottom:1px solid #34394a}
+.dtbl{min-height:96px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;margin:8px 0}
+.pc{display:inline-grid;place-items:center;min-width:44px;height:62px;margin:3px;padding:0 6px;border-radius:8px;background:#fff;color:#111;border:2px solid #ffd54a;font-size:18px;font-weight:900;font-family:inherit}
+.pc.r{color:#c4001a}
+.tp{display:inline-flex;margin:4px 12px 4px 4px}
+.tp .pc+.pc{margin-left:-22px;margin-top:14px}
 </style>
 </head>
 <body>
@@ -79,7 +92,9 @@ footer{text-align:center;color:#777;padding:30px;font-size:12px}
 <div class="container header">
   <div class="logo">✦ БЕЛБЭТ CASINO</div>
   <div class="right">
-    <button class="icon" id="mute" title="Звук">🔊</button>
+    <button class="balance" id="accBtn" style="font-size:14px;padding:8px 12px">👤 Войти</button>
+    <button class="icon" id="mus" title="Музыка">🎵</button>
+    <button class="icon" id="mute" title="Звуки">🔊</button>
     <button class="balance" id="balBtn">🪙 <span id="balance">100</span> ＋</button>
   </div>
 </div>
@@ -87,8 +102,13 @@ footer{text-align:center;color:#777;padding:30px;font-size:12px}
 
 <main class="container">
 <h1 class="title">🎰 ИГРОВАЯ ЗОНА</h1>
-<p class="subtitle">25 автоматов · 4 колеса фортуны · 5 линий</p>
-
+<p class="subtitle">25 автоматов · 4 колеса · Дурак · топ выигрышей</p>
+<div class="tabs">
+  <button class="tab active" data-t="games">🎰 Автоматы</button>
+  <button class="tab" data-t="durak">🃏 Дурак</button>
+  <button class="tab" data-t="top">🏆 Лучшие выигрыши</button>
+</div>
+<section id="tab-games">
 <div class="casino">
 <div class="machines" id="machines"></div>
 <div class="stage">
@@ -110,6 +130,25 @@ footer{text-align:center;color:#777;padding:30px;font-size:12px}
   <div id="history">Пока нет результатов</div><br>
   <button class="reset" id="reset">Сбросить прогресс</button>
 </div>
+</section>
+
+<section id="tab-durak" hidden>
+<div class="casino"><div class="stage">
+  <h2 class="machine-name">🃏 Дурак против бота</h2>
+  <div class="bets">Ставка: <span id="dbets"></span></div>
+  <div id="dbox"></div>
+  <div class="controls"><button class="play" id="dstart">Играть</button></div>
+  <div class="info">Подкидной дурак, 36 карт. Победа — ставка ×2, ничья — ставка возвращается, проигрыш — ставка сгорает. Ходи картой из руки; отбиваешь — тоже картой.</div>
+</div></div>
+</section>
+
+<section id="tab-top" hidden>
+<div class="casino">
+  <h2 class="machine-name">🏆 Лучшие выигрыши игроков</h2>
+  <div id="topList"></div>
+  <p class="small" style="text-align:center">В список попадают выигрыши от 50 🪙 вошедших в аккаунт игроков</p>
+</div>
+</section>
 </main>
 
 <footer>© 2026 БЕЛБЭТ · Виртуальная игровая зона · только игровые монеты, без реальных денег</footer>
@@ -123,6 +162,21 @@ footer{text-align:center;color:#777;padding:30px;font-size:12px}
   <button class="ghost" data-close="topModal">Закрыть</button>
 </div></div>
 
+<!-- Аккаунт -->
+<div class="modal" id="authModal"><div class="box">
+  <h2>👤 Аккаунт</h2>
+  <div id="aForm">
+    <input id="aLogin" placeholder="Логин (a–z, 0–9, _)" autocomplete="username" autocapitalize="none">
+    <input id="aPass" type="password" placeholder="Пароль (от 6 символов)" autocomplete="current-password">
+    <p id="aMsg" style="color:#ff8a8a;min-height:20px"></p>
+    <button class="gold" id="aIn">Войти</button>
+    <button class="ghost" id="aReg">Регистрация</button>
+  </div>
+  <div id="aOut" hidden><p id="aWho"></p><button class="gold" id="aLogout">Выйти</button></div>
+  <p class="small" id="aMode"></p>
+  <button class="ghost" data-close="authModal">Играть гостем / закрыть</button>
+</div></div>
+
 <!-- Колесо фортуны -->
 <div class="modal" id="wheelModal"><div class="box">
   <h2 id="wtitle">🎡 Колесо фортуны</h2>
@@ -132,10 +186,18 @@ footer{text-align:center;color:#777;padding:30px;font-size:12px}
   <button class="ghost" id="wclose">Закрыть</button>
 </div></div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 "use strict";
 const $=id=>document.getElementById(id);
 const WILD="🃏",SCAT="🎡",WCOST=50;
+const BETS=[5,10,20,50,100,250,500,1000];
+/* Вставь сюда настройки своего проекта Firebase (см. инструкцию) — тогда аккаунты работают на всех устройствах.
+   Пока поля пустые, аккаунты хранятся только в этом браузере. */
+const FIREBASE_CONFIG={apiKey:"",authDomain:"",projectId:"",appId:""};
+const FB=(FIREBASE_CONFIG.apiKey&&window.firebase)?(firebase.initializeApp(FIREBASE_CONFIG),{a:firebase.auth(),d:firebase.firestore()}):null;
 const W6=[30,26,20,14,7,3],W7=[30,25,20,12,7,4,2];
 const M=[.5,.8,1.2,2,4,8,15],LF={3:1,4:4,5:15};
 const L3=[[0,0,0],[1,1,1],[2,2,2],[0,1,2],[2,1,0]];
@@ -169,37 +231,155 @@ const games=[
 ["Музыкальный фестиваль","🎸",["🎵","🥁","🎤","🎹","🎸","🏆"]]
 ].map(([name,icon,s,r])=>({name,icon,s,reels:r||5,w:(s.length===7?W7:W6).concat([4,3]),pool:s.concat([WILD,SCAT])}));
 
-/* ---------- Звук (Web Audio, без файлов) ---------- */
+/* ---------- Звук и музыка (Web Audio, без файлов) ---------- */
 const AC=window.AudioContext||window.webkitAudioContext;
-let ac=null,muted=false;
-try{muted=localStorage.getItem("bb2_mute")==="1"}catch(e){}
-function tone(f,d=.1,t="sine",v=.08,w=0){
-  if(muted||!AC)return;
+let ac=null,mg=null,muted=false,mon=false,mi=0,mt=null;
+try{muted=localStorage.getItem("bb2_mute")==="1";mon=localStorage.getItem("bb3_music")==="1"}catch(e){}
+function actx(){
+  if(!AC)return null;
+  if(!ac){
+    ac=new AC();mg=ac.createGain();mg.gain.value=.8;
+    const lp=ac.createBiquadFilter();lp.type="lowpass";lp.frequency.value=2600;
+    const dl=ac.createDelay();dl.delayTime.value=.35;
+    const fb=ac.createGain();fb.gain.value=.3;
+    mg.connect(lp);lp.connect(ac.destination);
+    lp.connect(dl);dl.connect(fb);fb.connect(dl);dl.connect(ac.destination);
+  }
+  if(ac.state==="suspended")ac.resume();
+  return ac;
+}
+function tone(f,d=.15,t="sine",v=.06,w=0,a=.01,m=false){
+  if(m?!mon:muted)return;
   try{
-    ac=ac||new AC(); if(ac.state==="suspended")ac.resume();
-    const o=ac.createOscillator(),g=ac.createGain(),s=ac.currentTime+w;
+    const c=actx();if(!c)return;
+    const o=c.createOscillator(),g=c.createGain(),s=c.currentTime+w;
     o.type=t;o.frequency.value=f;
-    g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.001,s+d);
-    o.connect(g);g.connect(ac.destination);o.start(s);o.stop(s+d);
+    g.gain.setValueAtTime(.0001,s);g.gain.linearRampToValueAtTime(v,s+a);
+    g.gain.exponentialRampToValueAtTime(.0001,s+d);
+    o.connect(g);g.connect(mg);o.start(s);o.stop(s+d+.05);
   }catch(e){}
 }
+const mf=n=>440*Math.pow(2,(n-69)/12);
 const sfx={
-  tick:()=>tone(800+Math.random()*300,.04,"square",.025),
-  stop:()=>tone(130,.14,"triangle",.18),
-  win:big=>(big?[0,2,4,5,7,9,12]:[0,4,7,12]).forEach((n,i)=>tone(523*Math.pow(2,n/12),.2,"triangle",.1,i*.09)),
-  lose:()=>tone(190,.3,"sawtooth",.04),
-  coin:()=>{tone(1318,.08,"square",.05);tone(1760,.3,"square",.05,.08)}
+  tick:()=>tone(520+Math.random()*60,.05,"sine",.012),
+  stop:()=>tone(110,.18,"sine",.12),
+  win:big=>(big?[0,4,7,12,16,19]:[0,4,7,12]).forEach((n,i)=>tone(mf(72+n),.5,"sine",.06,i*.11)),
+  lose:()=>{tone(mf(60),.35,"sine",.04);tone(mf(55),.45,"sine",.04,.18)},
+  coin:()=>{tone(1319,.25,"sine",.04);tone(1760,.5,"sine",.04,.09)}
 };
+/* фоновая музыка: спокойные аккорды Am–F–C–G с мягкими нотами, тихо и без резких звуков */
+const CH=[[57,60,64],[53,57,60],[48,52,55],[55,59,62]];
+function chord(){
+  const c=CH[mi++%4];
+  tone(mf(c[0]-12),4.5,"sine",.05,0,1.2,true);
+  c.forEach(n=>tone(mf(n),4.5,"sine",.025,0,1.4,true));
+  for(let k=0;k<3;k++)if(Math.random()<.7)
+    tone(mf(c[Math.random()*3|0]+12*(1+(Math.random()*2|0))),1.8,"triangle",.018,.8+k*1.2,.02,true);
+}
+function music(){clearInterval(mt);if(mon){chord();mt=setInterval(chord,4000)}}
 
 /* ---------- Состояние ---------- */
-let balance=100,bet=10,cur=0,busy=false,history=[];
-try{
-  const b=localStorage.getItem("bb2_balance");
-  if(b!==null)balance=Number(b)||0;
-  history=JSON.parse(localStorage.getItem("bb2_history")||"[]");
-}catch(e){}
-function save(){try{localStorage.setItem("bb2_balance",balance);localStorage.setItem("bb2_history",JSON.stringify(history))}catch(e){}}
+let balance=100,bet=10,cur=0,busy=false,history=[],user=null,first=true;
+const jget=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+const jset=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const hk=()=>"bb3_h_"+(user?user.login:"guest");
+const esc=s=>String(s).replace(/[&<>"']/g,c=>"&#"+c.charCodeAt(0)+";");
+let bt=0;
+function pushBal(){
+  clearTimeout(bt);
+  bt=setTimeout(()=>{
+    if(!user)return;
+    if(FB)FB.d.doc("users/"+user.uid).set({login:user.login,balance},{merge:true}).catch(()=>{});
+    else{const us=jget("bb3_users",{});if(us[user.login]){us[user.login].b=balance;jset("bb3_users",us)}}
+  },600);
+}
+function save(){
+  jset(hk(),history);
+  if(user)pushBal();else{try{localStorage.setItem("bb2_balance",balance)}catch(e){}}
+}
 function upd(){$("balance").textContent=balance.toLocaleString("ru-RU");save()}
+
+/* ---------- Аккаунты и лучшие выигрыши ---------- */
+async function sha(t){
+  if(!(window.crypto&&crypto.subtle))return "p:"+t;
+  const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));
+  return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");
+}
+const em=l=>l+"@belbet.game";
+const fbErr=e=>({"auth/email-already-in-use":"Такой логин уже занят","auth/invalid-credential":"Неверный логин или пароль","auth/wrong-password":"Неверный логин или пароль","auth/user-not-found":"Неверный логин или пароль","auth/too-many-requests":"Слишком много попыток, подожди"}[e.code]||("Ошибка: "+(e.message||e)));
+const amsg=t=>$("aMsg").textContent=t;
+function ui(){
+  $("accBtn").textContent=user?"👤 "+user.login:"👤 Войти";
+  $("aForm").hidden=!!user;$("aOut").hidden=!user;
+  if(user)$("aWho").textContent="Ты вошёл как "+user.login;
+  $("aMode").textContent=FB?"Аккаунт хранится онлайн — заходи с любого устройства.":"Локальный режим: аккаунт хранится только в этом браузере.";
+}
+async function setUser(l,uid){
+  user={login:l,uid};first=false;
+  if(FB){
+    const ref=FB.d.doc("users/"+uid),r=await ref.get();
+    if(r.exists)balance=Number(r.data().balance)||0;
+    else{balance=100;await ref.set({login:l,balance})}
+  }else balance=Number(jget("bb3_users",{})[l].b)||0;
+  history=jget(hk(),[]);
+  upd();renderHistory();ui();show("authModal",false);
+}
+function guest(){
+  user=null;
+  const b=localStorage.getItem("bb2_balance");balance=b===null?100:(Number(b)||0);
+  history=jget(hk(),[]);upd();renderHistory();ui();
+  if(first){first=false;show("authModal",true)}
+}
+async function authDo(reg){
+  const l=$("aLogin").value.trim().toLowerCase(),p=$("aPass").value;
+  if(!/^[a-z0-9_]{3,16}$/.test(l))return amsg("Логин: 3–16 символов, a–z, 0–9, _");
+  if(p.length<6)return amsg("Пароль не короче 6 символов");
+  amsg("");
+  try{
+    if(FB){
+      if(reg)await FB.a.createUserWithEmailAndPassword(em(l),p);
+      else await FB.a.signInWithEmailAndPassword(em(l),p);
+    }else{
+      const us=jget("bb3_users",{}),h=await sha(p);
+      if(reg){if(us[l])return amsg("Такой логин уже занят");us[l]={h,b:100};jset("bb3_users",us)}
+      else if(!us[l]||us[l].h!==h)return amsg("Неверный логин или пароль");
+      localStorage.setItem("bb3_sess",l);await setUser(l);
+    }
+    $("aPass").value="";
+  }catch(e){amsg(fbErr(e))}
+}
+function initAuth(){
+  if(FB)FB.a.onAuthStateChanged(u=>u?setUser(u.email.split("@")[0],u.uid):guest());
+  else{const l=localStorage.getItem("bb3_sess");l&&jget("bb3_users",{})[l]?setUser(l):guest()}
+}
+function recWin(amount,game){
+  if(!user||amount<50)return;
+  const w={login:user.login,amount,game,ts:Date.now()};
+  if(FB)FB.d.collection("wins").add(w).catch(()=>{});
+  else{const a=jget("bb3_wins",[]);a.push(w);a.sort((x,y)=>y.amount-x.amount);jset("bb3_wins",a.slice(0,50))}
+}
+async function loadTop(){
+  $("topList").textContent="Загрузка...";
+  try{
+    let a;
+    if(FB)a=(await FB.d.collection("wins").orderBy("amount","desc").limit(10).get()).docs.map(d=>d.data());
+    else a=jget("bb3_wins",[]).slice(0,10);
+    $("topList").innerHTML=a.length?a.map((w,i)=>`<div class="top-i"><span>${["🥇","🥈","🥉"][i]||(i+1)+"."} <b>${esc(w.login)}</b> · ${esc(w.game)}</span><b style="color:#ffd54a">+${(Number(w.amount)||0).toLocaleString("ru-RU")} 🪙</b></div>`).join(""):"<p style='text-align:center'>Пока нет выигрышей — стань первым!</p>";
+  }catch(e){$("topList").textContent="Не удалось загрузить список"}
+}
+$("aIn").onclick=()=>authDo(false);
+$("aReg").onclick=()=>authDo(true);
+$("accBtn").onclick=()=>{amsg("");show("authModal",true)};
+$("aLogout").onclick=async()=>{
+  if(FB)await FB.a.signOut();
+  else{localStorage.removeItem("bb3_sess");guest()}
+  show("authModal",false);
+};
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));
+  ["games","durak","top"].forEach(t=>$("tab-"+t).hidden=t!==b.dataset.t);
+  if(b.dataset.t==="top")loadTop();
+});
 const msg=t=>$("message").textContent=t;
 
 /* ---------- Интерфейс ---------- */
@@ -220,7 +400,7 @@ wheels.forEach((c,i)=>{
   b.innerHTML=`<span>${c.icon}</span>${c.name}<small>${c.cost} 🪙</small>`;
   b.onclick=()=>openWheel(false,i);$("machines").appendChild(b);
 });
-[5,10,20].forEach(v=>{
+BETS.forEach(v=>{
   const b=document.createElement("button");
   b.className="bet"+(v===bet?" active":"");b.textContent=v;
   b.onclick=()=>{if(busy)return;bet=v;document.querySelectorAll(".bet").forEach(x=>x.classList.toggle("active",x===b))};
@@ -304,7 +484,7 @@ function finish(g,res){
   const reels=document.querySelectorAll(".reel");
   win.forEach(k=>{const [i,r]=k.split(",");reels[i].firstChild.children[r].classList.add("win")});
   if(total>0){
-    balance+=total;
+    balance+=total;recWin(total,g.name);
     msg("🎉 ВЫИГРЫШ +"+total+" 🪙");
     sfx.win(total>=bet*10);
   }else{
@@ -349,6 +529,13 @@ $("mute").onclick=()=>{
   try{localStorage.setItem("bb2_mute",muted?"1":"0")}catch(e){}
 };
 $("mute").textContent=muted?"🔇":"🔊";
+$("mus").onclick=()=>{
+  mon=!mon;$("mus").style.opacity=mon?1:.45;
+  try{localStorage.setItem("bb3_music",mon?"1":"0")}catch(e){}
+  music();
+};
+$("mus").style.opacity=mon?1:.45;
+document.addEventListener("pointerdown",()=>{if(mon&&!mt)music()},{once:true});
 
 /* ---------- Колесо фортуны ---------- */
 let rot=0,wfree=false,wbusy=false,wcur=0;
@@ -389,7 +576,7 @@ $("wspin").onclick=()=>{
   let t=0,step=50;
   (function tick(){sfx.tick();t+=step;step*=1.1;if(t<3900)setTimeout(tick,step)})();
   setTimeout(()=>{
-    const v=c.v[i];balance+=v;upd();
+    const v=c.v[i];balance+=v;recWin(v,c.name);upd();
     $("wmsg").textContent=v?"🎉 Выигрыш +"+v+" 🪙":"Пусто — повезёт в следующий раз";
     v?sfx.win(v>=c.cost*2):sfx.lose();
     wfree=false;wLabel();wbusy=false;$("wspin").disabled=false;
@@ -402,7 +589,124 @@ $("reset").onclick=()=>{
   if(busy||!confirm("Сбросить игровой прогресс?"))return;
   balance=100;history=[];upd();renderHistory();
 };
-selectGame(0);upd();renderHistory();
+/* ---------- Дурак ---------- */
+const R=["6","7","8","9","10","J","Q","K","A"],SU=["♠","♥","♦","♣"];
+let D=null,dst=50;
+[20,50,100,500,1000].forEach(v=>{
+  const b=document.createElement("button");
+  b.className="dbt"+(v===dst?" active":"");b.textContent=v;
+  b.onclick=()=>{if(D&&!D.over)return;dst=v;document.querySelectorAll(".dbt").forEach(x=>x.classList.toggle("active",x===b))};
+  $("dbets").appendChild(b);
+});
+const cv=c=>(c.s===D.tr?100:0)+c.r;
+const beats=(a,d)=>d.s===a.s?d.r>a.r:(d.s===D.tr&&a.s!==D.tr);
+const oth=w=>w==="p"?"b":"p";
+const rm=(h,c)=>h.splice(h.indexOf(c),1);
+const dm=t=>{D.m=t;drd()};
+function ddraw(w){while(D[w].length<6&&D.dk.length)D[w].push(D.dk.pop())}
+function dgo(){
+  if(D&&!D.over)return;
+  if(balance<dst){D=null;drd();$("dbox").innerHTML="<p class='message'>Не хватает монет для ставки — пополни баланс</p>";return}
+  balance-=dst;upd();
+  const dk=[];SU.forEach(s=>R.forEach((_,r)=>dk.push({r,s})));
+  for(let i=dk.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[dk[i],dk[j]]=[dk[j],dk[i]]}
+  D={dk,tr:dk[0].s,trc:dk[0],p:[],b:[],t:[],att:"p",lim:6,take:false,over:false,stake:dst,m:""};
+  ddraw("p");ddraw("b");
+  const lo=h=>Math.min(99,...h.filter(c=>c.s===D.tr).map(c=>c.r));
+  D.att=lo(D.b)<lo(D.p)?"b":"p";
+  dround();
+}
+function dround(){
+  D.lim=Math.min(6,D[oth(D.att)].length);D.take=false;
+  D.m=D.att==="p"?"Твой ход — выбери карту":"Ходит бот...";
+  drd();if(D.att==="b")setTimeout(bstep,800);
+}
+function dend(){
+  if(D.dk.length)return false;
+  const p=D.p.length,b=D.b.length;
+  if(p&&b)return false;
+  D.over=true;
+  if(!p&&!b){balance+=D.stake;D.m="🤝 Ничья — ставка возвращена"}
+  else if(!p){balance+=D.stake*2;recWin(D.stake*2,"Дурак");D.m="🎉 Бот — дурак! +"+D.stake*2+" 🪙";sfx.win(true)}
+  else{D.m="😅 Ты остался дураком. −"+D.stake+" 🪙";sfx.lose()}
+  upd();drd();return true;
+}
+function dbito(){
+  if(!D||D.over||D.take||!D.t.length||D.t.some(x=>!x.d))return;
+  D.t=[];ddraw(D.att);ddraw(oth(D.att));
+  if(dend())return;
+  D.att=oth(D.att);dround();
+}
+function dtake(w){
+  if(!D||D.over)return;
+  D[w].push(...D.t.flatMap(x=>x.d?[x.a,x.d]:[x.a]));D.t=[];
+  ddraw(oth(w));
+  if(dend())return;
+  dround();
+}
+function dtakeP(){D.take=true;D.m="Берёшь. Бот подкидывает...";drd();bstep()}
+function badd(){
+  if(D.t.length>=D.lim)return null;
+  const rs=new Set(D.t.flatMap(x=>[x.a.r,x.d?x.d.r:-1]));
+  const c=D.b.filter(c=>!D.t.length||rs.has(c.r)).sort((a,b)=>cv(a)-cv(b))[0];
+  if(!c||(D.t.length&&c.s===D.tr&&D.dk.length))return null;
+  return c;
+}
+function bstep(){
+  if(!D||D.over)return;
+  const und=D.t.filter(x=>!x.d);
+  if(D.att==="p"){
+    for(const x of und){
+      const c=D.b.filter(c=>beats(x.a,c)).sort((a,b)=>cv(a)-cv(b))[0];
+      if(!c){D.take=true;D.m="Бот берёт. Подкинь ещё или жми «Всё»";return drd()}
+      x.d=c;rm(D.b,c);
+    }
+    D.m="Бот отбился. Подкидывай или жми «Бито»";return drd();
+  }
+  if(D.take||!und.length){
+    const c=badd();
+    if(c){D.t.push({a:c});rm(D.b,c);D.m=D.take?"Бот подкидывает...":"Бей или бери";drd();if(D.take)setTimeout(bstep,500);return}
+    return D.take?dtake("p"):dbito();
+  }
+}
+function dplay(i){
+  if(!D||D.over)return;
+  const c=D.p[i];
+  if(D.att==="p"){
+    if(D.t.length>=D.lim)return dm("Больше карт подкинуть нельзя");
+    if(D.t.length&&!D.t.some(x=>x.a.r===c.r||(x.d&&x.d.r===c.r)))return dm("Нужна карта того же достоинства, что на столе");
+    D.p.splice(i,1);D.t.push({a:c});
+    D.m=D.take?"Подкидываешь...":"Бот думает...";drd();
+    if(!D.take)setTimeout(bstep,650);
+  }else{
+    if(D.take||!D.t.some(x=>!x.d))return;
+    const x=D.t.find(x=>!x.d&&beats(x.a,c));
+    if(!x)return dm("Этой картой не отбить");
+    x.d=c;D.p.splice(i,1);D.m="";drd();
+    if(!D.t.some(x=>!x.d))setTimeout(bstep,650);
+  }
+}
+function drd(){
+  const box=$("dbox");
+  $("dstart").hidden=!!(D&&!D.over);
+  if(!D){box.innerHTML="<p class='message'>Нажми «Играть»</p>";return}
+  const red=c=>c.s==="♥"||c.s==="♦"?"r":"";
+  const rc=c=>`<span class="pc ${red(c)}">${R[c.r]}${c.s}</span>`;
+  const und=D.t.some(x=>!x.d);
+  const btn=(t,f)=>`<button class="gold" onclick="${f}">${t}</button>`;
+  D.p.sort((a,b)=>cv(a)-cv(b));
+  let h=`<p class="small">Козырь: ${rc(D.trc)} · Колода: ${D.dk.length} · Карт у бота: ${D.b.length}</p>`;
+  h+=`<div class="dtbl">${D.t.map(x=>`<span class="tp">${rc(x.a)}${x.d?rc(x.d):""}</span>`).join("")||"<i class='small'>Стол пуст</i>"}</div>`;
+  h+=`<p class="message">${D.m}</p><div>`+D.p.map((c,i)=>`<button class="pc ${red(c)}" onclick="dplay(${i})">${R[c.r]}${c.s}</button>`).join("")+"</div>";
+  if(!D.over){
+    if(D.att==="p"){if(D.take)h+=btn("Всё","dtake('b')");else if(D.t.length&&!und)h+=btn("Бито","dbito()")}
+    else if(und&&!D.take)h+=btn("Беру","dtakeP()");
+  }
+  box.innerHTML=h;
+}
+$("dstart").onclick=dgo;
+
+selectGame(0);upd();renderHistory();drd();initAuth();
 </script>
 </body>
 </html>
